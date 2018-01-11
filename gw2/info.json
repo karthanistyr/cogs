@@ -1,10 +1,9 @@
 {
     "AUTHOR" : "karthanistyr",
     "INSTALL_MSG" : "You've install gw2.",
-    "NAME" : "Mycog",
+    "NAME" : "gw2",
     "SHORT" : "Fetches some info from the GW2 API v2",
     "DESCRIPTION" : "Blerh",
     "TAGS" : ["example", "tags", "list"],
-    "REQUIREMENTS" : ["tabulate", "Pillow"],
     "HIDDEN" : false
 }
