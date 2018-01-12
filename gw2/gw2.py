@@ -7,7 +7,7 @@ class gw2_api_client:
     def __init__(self):
         self.root_api_endpoint = "https://api.guildwars2.com"
 
-    def get_request(endpoint, arguments, api_key=None):
+    def get_request(self, endpoint, arguments, api_key=None):
         complete_endpoint = self.root_api_endpoint = endpoint
 
         if(api_key is not None):
