@@ -4,8 +4,6 @@ from .utils.dataIO import fileIO
 from discord.ext import commands
 
 class gw2:
-    """My custom cog that does stuff!"""
-
     def __init__(self, bot):
         self.bot = bot
         self.strings = fileIO("data/gw2/localised_strings.json", "load")
@@ -13,11 +11,11 @@ class gw2:
         #default (hardcode) to french locale for now
         self.locale = "fr"
 
-    def loadApiKeys():
+    async def loadApiKeys():
         keys = fileIO("data/gw2/api_keys.json", "load")
         return keys
 
-    def writeKeys(keys):
+    async def writeKeys(keys):
         fileIO("data/gw2/api_keys.json", "save", keys)
 
     @commands.command(pass_context=True)
@@ -33,23 +31,24 @@ class gw2:
             await self.bot.say(self.strings[self.locale]["no_key_passed"])
             return
         
-        keys = loadApiKeys()
+        keys = await loadApiKeys()
 
         if(ctx.message.author.id in keys):
             await self.bot.say(self.strings[self.locale]["key_override_warning"])
         else:
             keys[ctx.message.author.id] = apiKey
 
-        writeKeys(keys)
+        await writeKeys(keys)
     
     @commands.command(pass_context=True)
     async def deletekey(self, ctx):
     
-        keys = loadApiKeys()
+        keys = await loadApiKeys()
 
         if(ctx.message.author.id in keys):
             del keys[ctx.message.author.id]
-        writeKeys(keys)
+        
+        await writeKeys(keys)
 
 def setup(bot):
     bot.add_cog(gw2(bot))
