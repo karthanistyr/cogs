@@ -4,6 +4,6 @@
     "NAME" : "gw2",
     "SHORT" : "Fetches some info from the GW2 API v2",
     "DESCRIPTION" : "Blerh",
-    "TAGS" : ["example", "tags", "list"],
+    "REQUIREMENTS" : ["requests"],
     "HIDDEN" : false
 }
