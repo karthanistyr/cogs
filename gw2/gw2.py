@@ -56,7 +56,7 @@ class gw2:
 
         chars = api_client.get_characters(apiKey)
 
-        em = discord.Embed(title=self.strngs["characters_title"].format(ctx.message.author.mention))
+        em = discord.Embed(title=self.strngs["characters_title"].format(ctx.message.author.username))
         for char in chars:
             em.add_field(name="char", value=char, inline=True)
 
