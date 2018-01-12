@@ -23,7 +23,7 @@ class gw2:
         if(userId in keys):
             return keys[userId]
 
-    def getRequest(endpoint, apiKey):
+    def getRequest(self, endpoint, apiKey):
         rootEndpoint = "https://api.guildwars2.com"
         authorizationHeader = {"Authorization": "Bearer " + apiKey}
 
