@@ -34,7 +34,7 @@ class gw2:
     async def characters(self, ctx):
         apiKey = self.getUserKey(ctx.message.author.id)
         if(apiKey is None):
-            self.bot.say(self.strings[self.locale]["no_key_exists"])
+            await self.bot.say(self.strings[self.locale]["no_key_exists"])
             return
 
         charData = self.getRequest("/v2/characters", apiKey)
@@ -55,7 +55,7 @@ class gw2:
 
         self.writeKeys(keys)
 
-        self.bot.say(self.strings[self.locale]["command_completed"])
+        await self.bot.say(self.strings[self.locale]["command_completed"])
     
     @commands.command(pass_context=True)
     async def deletekey(self, ctx):
@@ -66,7 +66,7 @@ class gw2:
             del keys[ctx.message.author.id]
         
         self.writeKeys(keys)
-        self.bot.say(self.strings[self.locale]["command_completed"])
+        await self.bot.say(self.strings[self.locale]["command_completed"])
 
 def setup(bot):
     bot.add_cog(gw2(bot))
