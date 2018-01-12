@@ -60,7 +60,9 @@ class gw2:
         for char in chars:
             em.add_field(name="char", value=char, inline=True)
 
-        await self.bot.say(em)
+        response = self.bot.loop.run_in_executor(None, em)
+        result = await asyncio.wait_for(response, timeout=10)
+        #await self.bot.say(em)
 
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
