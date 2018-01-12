@@ -6,15 +6,15 @@ class gw2:
     """My custom cog that does stuff!"""
 
     def __init__(self, bot):
-        self.commandIssuer = ctx.message.author
         self.bot = bot
 
-    @commands.command()
-    async def characters(self):
+    @commands.command(pass_context=True)
+    async def characters(self, ctx):
         """This does stuff!"""
 
         #Your code will go here
-        await self.bot.say("I can do stuff to" + commandIssue.mention  + "!")
+        print(self)
+        await self.bot.say("I can do stuff to" + ctx.message.author.mention  + "!")
 
 def setup(bot):
     bot.add_cog(gw2(bot))
