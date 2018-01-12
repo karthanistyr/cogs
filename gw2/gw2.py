@@ -11,11 +11,11 @@ class gw2:
         #default (hardcode) to french locale for now
         self.locale = "fr"
 
-    async def loadApiKeys():
+    def loadApiKeys():
         keys = fileIO("data/gw2/api_keys.json", "load")
         return keys
 
-    async def writeKeys(keys):
+    def writeKeys(keys):
         fileIO("data/gw2/api_keys.json", "save", keys)
 
     @commands.command(pass_context=True)
@@ -31,24 +31,24 @@ class gw2:
             await self.bot.say(self.strings[self.locale]["no_key_passed"])
             return
         
-        keys = await loadApiKeys()
+        keys = self.loadApiKeys()
 
         if(ctx.message.author.id in keys):
             await self.bot.say(self.strings[self.locale]["key_override_warning"])
         else:
             keys[ctx.message.author.id] = apiKey
 
-        await writeKeys(keys)
+        self.writeKeys(keys)
     
     @commands.command(pass_context=True)
     async def deletekey(self, ctx):
     
-        keys = await loadApiKeys()
+        keys = self.loadApiKeys()
 
         if(ctx.message.author.id in keys):
             del keys[ctx.message.author.id]
         
-        await writeKeys(keys)
+        self.writeKeys(keys)
 
 def setup(bot):
     bot.add_cog(gw2(bot))
