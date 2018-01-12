@@ -40,7 +40,7 @@ class gw2:
 
         charData = self.getRequest("/v2/characters", apiKey)
 
-        em = discord.Embed(title=strngs["character_title"].format(ctx.message.author.mention))
+        em = discord.Embed(title=self.strngs["character_title"].format(ctx.message.author.mention))
 
         for char in charData:
             em.add_field("char", char, False)
