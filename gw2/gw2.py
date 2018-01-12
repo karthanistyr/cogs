@@ -11,11 +11,11 @@ class gw2:
         #default (hardcode) to french locale for now
         self.locale = "fr"
 
-    def loadApiKeys():
+    def loadApiKeys(self):
         keys = fileIO("data/gw2/api_keys.json", "load")
         return keys
 
-    def writeKeys(keys):
+    def writeKeys(self, keys):
         fileIO("data/gw2/api_keys.json", "save", keys)
 
     @commands.command(pass_context=True)
