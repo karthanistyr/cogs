@@ -55,7 +55,12 @@ class gw2:
         api_client = gw2_api_client()
 
         chars = api_client.get_characters(apiKey)
-        await self.bot.say(chars)
+
+        em = discord.Embed(title=self.strngs["characters_title"].format(ctx.message.author.mention))
+        for char in chars:
+            em.add_field(name="char", value=char, inline=True)
+
+        await self.bot.say(em)
 
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
