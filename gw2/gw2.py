@@ -13,6 +13,13 @@ class gw2:
         #default (hardcode) to french locale for now
         self.locale = "fr"
 
+def loadApisKeys():
+    keys = fileIO("data/gw2/api_keys.json", "load")
+    return keys
+
+def writeKeys(keys):
+    fileIO("data/gw2/api_keys.json", "save", keys)
+
     @commands.command(pass_context=True)
     async def characters(self, ctx):
         """This does stuff!"""
@@ -43,15 +50,6 @@ class gw2:
         if(ctx.message.author.id in keys):
             del keys[ctx.message.author.id]
         writeKeys(keys)
-
-def loadApisKeys():
-    with open("data/gw2/api_keys.json", "r") as key_file:
-        keys = json.load(key_file)
-    return keys
-
-def writeKeys(keys):
-    with open("data/gw2/api_keys.json", "w") as key_file:
-        json.dump(keys, key_file)
 
 def setup(bot):
     bot.add_cog(gw2(bot))
