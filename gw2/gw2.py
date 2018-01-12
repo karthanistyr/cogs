@@ -13,7 +13,7 @@ class gw2:
         #default (hardcode) to french locale for now
         self.locale = "fr"
 
-def loadApisKeys():
+def loadApiKeys():
     keys = fileIO("data/gw2/api_keys.json", "load")
     return keys
 
