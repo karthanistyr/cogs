@@ -21,7 +21,7 @@ class gw2_api_client:
     def get_characters(self, api_key):
         ep = "/v2/characters"
 
-        char_data = get_request(ep, None, api_key)
+        char_data = self.get_request(ep, None, api_key)
         return char_data
 
 class gw2:
