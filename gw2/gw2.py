@@ -33,7 +33,7 @@ class gw2:
     @commands.command(pass_context=True)
     async def characters(self, ctx):
         apiKey = self.getUserKey(ctx.message.author.id)
-        if(apiKey is None)
+        if(apiKey is None):
             self.bot.say(self.strings[self.locale]["no_key_exists"])
             return
 
