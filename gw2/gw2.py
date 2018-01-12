@@ -8,8 +8,7 @@ class gw2:
 
     def __init__(self, bot):
         self.bot = bot
-        with open("data/gw2/localised_strings.json", "r") as strngs:
-            self.strings = json.load(strngs)
+        strngs = fileIO("data/gw2/localised_strings.json", "load")
         
         #default (hardcode) to french locale for now
         self.locale = "fr"
