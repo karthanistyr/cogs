@@ -42,8 +42,8 @@ class gw2:
 
         em = discord.Embed(title=strngs["character_title"].format(ctx.message.author.mention))
 
-        for(char in charData):
-            em.add_field(*,"char", char, False)
+        for char in charData:
+            em.add_field("char", char, False)
             
         await self.bot.say(em)
         
