@@ -37,7 +37,7 @@ class gw2:
             self.bot.say(self.strings[self.locale]["no_key_exists"])
             return
 
-        charData = getRequest("/v2/characters", apiKey)
+        charData = self.getRequest("/v2/characters", apiKey)
         await self.bot.say(charData)
         
     @commands.command(pass_context=True)
