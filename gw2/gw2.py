@@ -18,15 +18,30 @@ class gw2:
     def writeKeys(self, keys):
         fileIO("data/gw2/api_keys.json", "save", keys)
 
+    def getUserKey(self, userId):
+        keys = self.loadApiKeys()
+        if(userId in keys):
+            return keys[userId]
+
+    def getRequest(endpoint, apiKey):
+        rootEndpoint = "https://api.guildwars2.com"
+        authorizationHeader = {"Authorization": "Bearer " + apiKey}
+
+        r = requests.get(rootEndpoint + endpoint, headers=authorizationHeader)
+        return r.json()
+
     @commands.command(pass_context=True)
     async def characters(self, ctx):
-        """This does stuff!"""
+        apiKey = self.getUserKey(ctx.message.author.id)
+        if(apiKey is null)
+            self.bot.say(self.strings[self.locale]["no_key_exists"])
+            return
 
-        #Your code will go here
-        await self.bot.say("I can do stuff to " + ctx.message.author.mention  + "!")
-
+        charData = getRequest("/v2/characters", apiKey)
+        await self.bot.say(charData)
+        
     @commands.command(pass_context=True)
-    async def storekey(self, ctx, apiKey=None):
+    async def storekey(self, ctx, apiKey=None)
         if(apiKey is None):
             await self.bot.say(self.strings[self.locale]["no_key_passed"])
             return
@@ -34,11 +49,13 @@ class gw2:
         keys = self.loadApiKeys()
 
         if(ctx.message.author.id in keys):
-            await self.bot.say(self.strings[self.locale]["key_override_warning"])
+            await self.bot.say(self.strings[self.locale]["key_exists_warning"])
         else:
             keys[ctx.message.author.id] = apiKey
 
         self.writeKeys(keys)
+
+        self.bot.say(self.strings[self.locale]["command_completed"])
     
     @commands.command(pass_context=True)
     async def deletekey(self, ctx):
@@ -49,6 +66,7 @@ class gw2:
             del keys[ctx.message.author.id]
         
         self.writeKeys(keys)
+        self.bot.say(self.strings[self.locale]["command_completed"])
 
 def setup(bot):
     bot.add_cog(gw2(bot))
