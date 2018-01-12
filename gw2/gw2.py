@@ -8,7 +8,7 @@ class gw2_api_client:
         self.root_api_endpoint = "https://api.guildwars2.com"
 
     def get_request(self, endpoint, arguments, api_key=None):
-        complete_endpoint = self.root_api_endpoint = endpoint
+        complete_endpoint = self.root_api_endpoint + endpoint
 
         if(api_key is not None):
             headers = {"Authorization": "Bearer {}".format(api_key)}
