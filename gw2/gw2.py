@@ -24,13 +24,13 @@ class gw2:
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
         if(apiKey == None):
-            await self.bot.say(self.strings[self.locale]["no_key_passed"]
+            await self.bot.say(self.strings[self.locale]["no_key_passed"])
             return
         
         keys = loadApiKeys()
 
         if(ctx.message.author.id in keys):
-            await self.bot.say(self.strings[self.locale]["key_override_warning"]
+            await self.bot.say(self.strings[self.locale]["key_override_warning"])
         else:
             keys[ctx.message.author.id] = apiKey
 
@@ -39,12 +39,11 @@ class gw2:
     @commands.command(pass_context=True)
     async def deletekey(self, ctx):
     
-    keys = loadApiKeys()
+        keys = loadApiKeys()
 
-    if(ctx.message.author.id in keys):
-        del keys[ctx.message.author.id]
-
-    writeKeys(keys)
+        if(ctx.message.author.id in keys):
+            del keys[ctx.message.author.id]
+        writeKeys(keys)
 
 def loadApisKeys():
     with open("data/gw2/api_keys.json", "r") as key_file:
