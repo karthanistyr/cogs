@@ -39,13 +39,12 @@ class gw2:
             return
 
         charData = self.getRequest("/v2/characters", apiKey)
-
-        em = discord.Embed(title=self.strngs["characters_title"].format(ctx.message.author.mention))
-
+        
+        chars = ""
         for char in charData:
-            em.add_field("char", char, False)
+            chars += char + "\n"
             
-        await self.bot.say(em)
+        await self.bot.say(chars)
         
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
