@@ -41,7 +41,7 @@ class gw2:
         await self.bot.say(charData)
         
     @commands.command(pass_context=True)
-    async def storekey(self, ctx, apiKey=None)
+    async def storekey(self, ctx, apiKey=None):
         if(apiKey is None):
             await self.bot.say(self.strings[self.locale]["no_key_passed"])
             return
