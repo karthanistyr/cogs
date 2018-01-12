@@ -1,6 +1,7 @@
 {
 	"fr":
 	{
+		"characters_title": "Personnages de {}",
 		"command_completed": "Commande effectuée.",
 		"no_key_passed": "Vous n'avez pas passé de clé.",
 		"no_key_exists": "Il n'existe pas de clé pour votre compte.",
@@ -8,6 +9,7 @@
 	},
 	"en":
 	{
+		"characters_title": "{}'s characters",
 		"command_completed": "Command completed.",
 		"no_key_passed": "You haven't passed a key.",
 		"no_key_exists": "There is no key for your account.",

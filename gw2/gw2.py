@@ -10,6 +10,7 @@ class gw2:
         
         #default (hardcode) to french locale for now
         self.locale = "fr"
+        strngs = self.strings[self.locale]
 
     def loadApiKeys(self):
         keys = fileIO("data/gw2/api_keys.json", "load")
@@ -38,7 +39,12 @@ class gw2:
             return
 
         charData = self.getRequest("/v2/characters", apiKey)
-        await self.bot.say(charData)
+
+        em = discord.Embed(title=strngs["character_title"].format(ctx.message.author.mention)
+        for(char in charData):
+            em.add_field(*,"char", char, False)
+            
+        await self.bot.say(em)
         
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
