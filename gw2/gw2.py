@@ -32,7 +32,7 @@ class gw2_api_client:
         dailies_data = self.get_request(ep_tomorrow if tomorrow else ep_today, None)
         return dailies_data
 
-    def get_daily_quest_details(self, ids, lang=None)
+    def get_daily_quest_details(self, ids, lang=None):
         ep_daily_details = "/v2/achievements"
         args = {"ids": ids}
 
