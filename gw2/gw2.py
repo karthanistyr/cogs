@@ -97,7 +97,7 @@ class gw2:
 
         daily_ids = []
         for daily in dailies[category]:
-            daily_ids.append(daily["id"])
+            daily_ids.append(str(daily["id"]))
 
         daily_details = api_client.get_daily_quest_details(",".join(daily_ids), self.locale)
 
