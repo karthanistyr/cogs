@@ -14,7 +14,7 @@ class gw2_api_client:
 
         if(api_key is not None):
             headers = {"Authorization": "Bearer {}".format(api_key)}
-        
+
         get_response = requests.get(complete_endpoint, params=arguments, headers=headers)
 
         if(get_response.status_code == 200):
@@ -27,7 +27,7 @@ class gw2_api_client:
         return char_data
 
     def get_dailies(self, tomorrow: bool=None):
-        ep_today = "/v2/achievements"
+        ep_today = "/v2/achievements/daily"
         ep_tomorrow = ep_today + "/tomorrow"
 
         dailies_data = self.get_request(ep_tomorrow if tomorrow else ep_today, None)
