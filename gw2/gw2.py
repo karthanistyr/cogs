@@ -10,10 +10,11 @@ class gw2_api_client:
 
     def get_request(self, endpoint, arguments, api_key=None):
         complete_endpoint = self.root_api_endpoint + endpoint
+        headers = None
 
         if(api_key is not None):
             headers = {"Authorization": "Bearer {}".format(api_key)}
-
+        
         get_response = requests.get(complete_endpoint, params=arguments, headers=headers)
 
         if(get_response.status_code == 200):
