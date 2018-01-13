@@ -95,7 +95,7 @@ class gw2:
         api_client = gw2_api_client()
         dailies = api_client.get_dailies(True if (tomorrow == "tomorrow") else False)
 
-        daily_ids = {}
+        daily_ids = []
         for daily in dailies[category]:
             daily_ids.append(daily["id"])
 
