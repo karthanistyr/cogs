@@ -101,7 +101,7 @@ class gw2:
 
         daily_details = api_client.get_daily_quest_details(",".join(daily_ids), self.locale)
 
-        await self.bot.say(daily_details)
+        await self.bot.say("hi")
 
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
