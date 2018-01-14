@@ -218,7 +218,7 @@ class gw2_high_level_api_client:
         reward_items = self.get_items(items_ids, lang)
         items_data = {}
         for data in reward_items:
-            items_data[data["id"]] = data
+            items_data[data.id] = data
 
         achievement_list = []
         for dailyd in daily_details:
