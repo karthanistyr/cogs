@@ -50,6 +50,7 @@ class gw2:
 
         #default (hardcode) to french locale for now
         self.locale = "fr"
+        #shortcut to localised strings
         self.strings = self.locales[self.locale]
 
     def loadApiKeys(self):
@@ -101,7 +102,12 @@ class gw2:
 
         daily_details = api_client.get_daily_quest_details(",".join(daily_ids), self.locale)
 
-        await self.bot.say("hi")
+        em = discord.Embed(title=self.strings["daily_quests_embed_title"].format(category))
+
+        for i in range(len(dailies[category])):
+            em.add_field(name="{}: {}".format(daily_details(i)["name"], daily_details(i)["description"]), value=daily_details(i)["requirement"], inline=False)
+
+        await self.bot.say(embed=em)
 
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
