@@ -111,7 +111,7 @@ class gw2_high_level_api_client:
             self.type = json["type"]
             self.flags = json["flags"]
             self.tiers = []
-            for tier in json["tiers"]
+            for tier in json["tiers"]:
                 self.tiers.append(achievement_tier(tier))
             self.rewards = []
 
