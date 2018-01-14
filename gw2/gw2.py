@@ -1,7 +1,7 @@
 import discord
 import requests
 from enum import Enum
-#from .utils.dataIO import fileIO
+from .utils.dataIO import fileIO
 from discord.ext import commands
 
 #from https://wiki.guildwars2.com/wiki/Template:Rarity
