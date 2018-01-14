@@ -356,6 +356,9 @@ class gw2_high_level_api_client:
 
     def get_character(self, key, char_name, lang=None):
         char_data = self.rest_client.get_characters(key, char_name)
+        if(char_data is None):
+            return
+
         char = gw2_high_level_api_client.character(char_data)
 
         if(char_data.get("title", None) is not None):
@@ -415,6 +418,9 @@ class gw2:
 
         api_client = gw2_high_level_api_client()
         char = api_client.get_character(apiKey, char_name, self.locale)
+
+        if(char is None):
+            await self.bot.say("Personnage introuvable.")
 
         #fetch relevant icons
         icons = api_client.get_icons("icon_{},icon_{}_big".format(char.profession.lower(), char.profession.lower()))
