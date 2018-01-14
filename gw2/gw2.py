@@ -1,7 +1,7 @@
 import discord
 import requests
 from enum import Enum
-from .utils.dataIO import fileIO
+#from .utils.dataIO import fileIO
 from discord.ext import commands
 
 #from https://wiki.guildwars2.com/wiki/Template:Rarity
@@ -132,11 +132,15 @@ class gw2_high_level_api_client:
             self.icon = json.get("icon", None)
             self.details = gw2_high_level_api_client.item_details(json["details"]) # type: item_details
 
+        def __str__(self):
+            return "{}".format(self.name)
+
     class achievement_reward:
         def __init__(self, json=None):
             self.type = None
             self.id = None
-            self.count = 0
+            self.count = None
+            self.item = None
 
             if(json is not None):
                 self.load_from_json(json)
@@ -146,8 +150,14 @@ class gw2_high_level_api_client:
             self.id = json.get("id", None)
             self.count = json.get("count", None)
 
+        def load_item_data(self, item):
+            self.item = item
+
         def __str__(self):
-            return "{} ({}) x{}".format(self.type, self.id, self.count)
+            if(self.item is not None):
+                return "{} x{}".format(str(self.item), self.count)
+            else:
+                return "{} ({}) x{}".format(self.type, self.id, self.count)
 
     class achievement_tier:
         def __init__(self, json=None):
@@ -204,9 +214,20 @@ class gw2_high_level_api_client:
 
         daily_details = api_client.get_daily_quest_details(",".join(daily_ids), lang)
 
+        #bulk up item rewards lookups
+        items_ids = ",".join([str(qr["id"]) for dq in daily_details for qr in dq["rewards"] if qr["type"] == "Item"])
+        reward_items = self.rest_client.get_items(items_ids, lang)
+        items_data = {}
+        for data in reward_items:
+            items_data[data["id"]] = data
+
         achievement_list = []
         for dailyd in daily_details:
-            achievement_list.append(gw2_high_level_api_client.achievement(dailyd["id"], dailyd))
+            ach = gw2_high_level_api_client.achievement(dailyd["id"], dailyd)
+            for reward in ach.rewards:
+                if(reward.type == "Item"):
+                    reward.item = gw2_high_level_api_client.item(items_data[reward.id])
+            achievement_list.append(ach)
         return achievement_list
 
 class gw2:
@@ -265,7 +286,7 @@ class gw2:
         em = discord.Embed(title=self.strings["daily_quests_embed_title"].format(category))
 
         for quest in daily_list:
-            rewards_text = ", ".join(quest.rewards)
+            rewards_text = ", ".join(["{} x{}".format(reward.item.name, reward.count) for reward in quest.rewards])
             em.add_field(name=quest.name, value="{}\nRewards: {}\n".format(quest.requirement, rewards_text), inline=False)
 
         await self.bot.say(embed=em)
