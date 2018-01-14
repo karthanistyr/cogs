@@ -416,7 +416,7 @@ class gw2:
         icon_big = icons[1]
 
         em = discord.Embed(title=char.name)
-        em.set_author(name=self.bot.nick, icon_url=icon_small.icon)
+        em.set_author(name=char.name, icon_url=icon_small.icon)
         em.set_thumbnail(url=icon_big.icon)
         em.add_field(name=self.strings["profession"], value=char.profession, inline=True)
         em.add_field(name=self.strings["level"], value=char.level, inline=True)
