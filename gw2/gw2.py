@@ -1,7 +1,7 @@
 import discord
 import requests
 from enum import Enum
-from .utils.dataIO import fileIO
+#from .utils.dataIO import fileIO
 from discord.ext import commands
 
 #from https://wiki.guildwars2.com/wiki/Template:Rarity
@@ -192,8 +192,8 @@ class gw2_high_level_api_client:
 
     class achievement_tier:
         def __init__(self, json=None):
-            self.count = 0
-            self.points = 0
+            self.count = None
+            self.points = None
 
             if(json is not None):
                 self.load_from_json(json)
@@ -237,7 +237,7 @@ class gw2_high_level_api_client:
 
     def get_daily_achievements(self, tomorrow, category, lang=None):
         dailies = self.rest_client.get_dailies(True if (tomorrow == "tomorrow") else False)
-        return self.get_achievements(",".join([d["id"] for d in dailies]))
+        return self.get_achievements(",".join([str(d["id"]) for d in dailies[category]]))
 
     def get_achievements(self, ids, lang=None):
         achievement_details = self.rest_client.get_daily_quest_details(ids, lang)
@@ -250,7 +250,7 @@ class gw2_high_level_api_client:
             items_data[data.id] = data
 
         achievement_list = []
-        for dailyd in daily_details:
+        for dailyd in achievement_details:
             ach = gw2_high_level_api_client.achievement(dailyd["id"], dailyd)
             for reward in ach.rewards:
                 if(reward.type == "Item"):
