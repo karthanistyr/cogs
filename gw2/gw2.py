@@ -186,9 +186,7 @@ class gw2_high_level_api_client:
                 self.tiers.append(gw2_high_level_api_client.achievement_tier(tier))
             self.rewards = []
             for rew in json["rewards"]:
-                if (rew["type"] == "Item"):
-                    item = self.rest_client.get_items(rew["id"])
-                    self.rewards.append(gw2_high_level_api_client.item(item))
+                self.rewards.append(gw2_high_level_api_client.achievement_reward(rew))
 
     def __init__(self):
         self.rest_client = gw2_api_client()
