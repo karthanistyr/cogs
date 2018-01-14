@@ -1,7 +1,9 @@
 import discord
 import requests
+import urllib
+import datetime
 from enum import Enum
-from .utils.dataIO import fileIO
+#from .utils.dataIO import fileIO
 from discord.ext import commands
 
 #from https://wiki.guildwars2.com/wiki/Template:Rarity
@@ -33,10 +35,14 @@ class gw2_api_client:
         if(get_response.status_code == 200):
             return get_response.json()
 
-    def get_characters(self, api_key):
+    def get_characters(self, api_key, char_name=None):
         ep = "/v2/characters"
 
-        char_data = self.get_request(ep, None, api_key)
+        safe_char_name = ""
+        if(char_name is not None):
+            safe_char_name = urllib.parse.quote(char_name)
+
+        char_data = self.get_request(ep + "/" + safe_char_name, None, api_key)
         return char_data
 
     def get_dailies(self, tomorrow: bool=None):
@@ -232,6 +238,69 @@ class gw2_high_level_api_client:
             for rew in json["rewards"]:
                 self.rewards.append(gw2_high_level_api_client.achievement_reward(rew))
 
+    class crafting:
+        def __init__(self, json=None):
+            self.discipline = None
+            self.rating = None
+            self.active = None
+
+            if(json is not None):
+                self.load_from_json(json)
+
+        def load_from_json(self, json: dict):
+            self.discipline = json.get("discipline", None)
+            self.rating = json.get("rating", None)
+            self.active = json.get("active", None)
+
+    class character:
+        def __init__(self, json=None):
+            self.name = None
+            self.race = None
+            self.gender = None
+            self.flags = []
+            self.profession = None
+            self.level = None
+            self.guild = None
+            self.age = None
+            self.created = None
+            self.deaths = None
+            self.crafting = []
+            self.title = None
+            self.backstory = []
+            self.wvw_abilities = []
+            self.specializations = []
+            self.skills = []
+            self.equipement = []
+            self.recipes = []
+            self.equipment_pvp = []
+            self.training = []
+
+            if(json is not None):
+                self.load_from_json(json)
+
+        def load_from_json(self, json: dict):
+            self.name = json.get("name", None)
+            self.race = json.get("race", None)
+            self.gender = json.get("gender", None)
+            self.flags = []
+            self.profession = json.get("profession", None)
+            self.level = json.get("level", None)
+            self.guild = None # TODO guilde
+            self.age = json.get("age", None)
+            self.created = json.get("created", None)
+            self.deaths = json.get("deaths", None)
+            self.crafting = []
+            self.title = None # TODO title
+            self.backstory = []
+            self.wvw_abilities = []
+            self.specializations = []
+            self.skills = []
+            self.equipement = []
+            self.recipes = []
+            self.equipment_pvp = []
+            self.training = []
+
+
     def __init__(self):
         self.rest_client = gw2_api_client()
 
@@ -267,6 +336,10 @@ class gw2_high_level_api_client:
         titles_data = self.rest_client.get_titles(ids, lang)
         return [gw2_high_level_api_client.title(title_data) for title_data in titles_data]
 
+    def get_character(self, key, char_name):
+        char_data = self.rest_client.get_characters(key, char_name)
+        return gw2_high_level_api_client.character(char_data)
+
 class gw2:
     def __init__(self, bot):
         self.bot = bot
@@ -297,12 +370,31 @@ class gw2:
             return
 
         api_client = gw2_api_client()
-
         chars = api_client.get_characters(apiKey)
 
         em = discord.Embed(title=self.strings["characters_title"].format(ctx.message.author.name))
         for char in chars:
             em.add_field(name="char", value=char, inline=True)
+
+        await self.bot.say(embed=em)
+
+    @commands.command(pass_context=True)
+    async def character(self, ctx, char_name):
+        apiKey = self.getUserKey(ctx.message.author.id)
+        if(apiKey is None):
+            await self.bot.say(self.strings["no_key_exists"])
+            return
+
+        api_client = gw2_high_level_api_client()
+        char = api_client.get_character(apiKey, char_name)
+
+        em = discord.Embed(title=chars.name)
+
+        em.add_field(name=self.strings["profession"], value=char.profession, inline=True)
+        em.add_field(name=self.strings["level"], value=char.level, inline=True)
+        em.add_field(name=self.strings["race"], value=char.race, inline=True)
+        em.add_field(name=self.strings["death"], value="{} {}".format(char.deaths, self.strings["times"]), inline=True)
+        em.add_field(name=self.strings["age"], value="{}".format(str(datetime.timedelta(seconds=char.age))), inline=True)
 
         await self.bot.say(embed=em)
 
