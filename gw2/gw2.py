@@ -237,7 +237,7 @@ class gw2_high_level_api_client:
 
     def get_daily_achievements(self, tomorrow, category, lang=None):
         dailies = self.rest_client.get_dailies(True if (tomorrow == "tomorrow") else False)
-        return self.get_achievements(",".join([str(d["id"]) for d in dailies[category]]))
+        return self.get_achievements(",".join([str(d["id"]) for d in dailies[category]]), lang)
 
     def get_achievements(self, ids, lang=None):
         achievement_details = self.rest_client.get_daily_quest_details(ids, lang)
