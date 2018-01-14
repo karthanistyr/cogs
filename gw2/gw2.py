@@ -173,7 +173,7 @@ class gw2:
         for quest in daily_list:
             em.add_field(name=quest.name, value="".format(quest.requirement), inline=False)
 
-        await self.bot.say("hi")
+        await self.bot.say(embed=em)
 
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
