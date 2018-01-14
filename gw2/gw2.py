@@ -411,7 +411,7 @@ class gw2:
         char = api_client.get_character(apiKey, char_name)
 
         #fetch relevant icons
-        icons = api_client.get_icons("icon_{},icon_{}_big".format(char.profession))
+        icons = api_client.get_icons("icon_{0},icon_{0}_big".format(char.profession))
         icon_small = icons[0]
         icon_big = icons[1]
 
