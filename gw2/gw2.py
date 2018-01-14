@@ -205,18 +205,17 @@ class gw2_high_level_api_client:
         self.rest_client = gw2_api_client()
 
     def get_daily_achievements(self, tomorrow, category, lang=None):
-        api_client = gw2_api_client()
-        dailies = api_client.get_dailies(True if (tomorrow == "tomorrow") else False)
+        dailies = self.rest_client.get_dailies(True if (tomorrow == "tomorrow") else False)
 
         daily_ids = []
         for daily in dailies[category]:
             daily_ids.append(str(daily["id"]))
 
-        daily_details = api_client.get_daily_quest_details(",".join(daily_ids), lang)
+        daily_details = self.rest_client.get_daily_quest_details(",".join(daily_ids), lang)
 
         #bulk up item rewards lookups
         items_ids = ",".join([str(qr["id"]) for dq in daily_details for qr in dq["rewards"] if qr["type"] == "Item"])
-        reward_items = self.rest_client.get_items(items_ids, lang)
+        reward_items = self.get_items(items_ids, lang)
         items_data = {}
         for data in reward_items:
             items_data[data["id"]] = data
@@ -226,9 +225,15 @@ class gw2_high_level_api_client:
             ach = gw2_high_level_api_client.achievement(dailyd["id"], dailyd)
             for reward in ach.rewards:
                 if(reward.type == "Item"):
-                    reward.item = gw2_high_level_api_client.item(items_data[reward.id])
+                    reward.item = items_data[reward.id]
             achievement_list.append(ach)
         return achievement_list
+
+    def get_items(self, ids, lang=None):
+        api_client = gw2_api_client()
+        items_data = api_client.get_items(ids, lang)
+
+        return [gw2_high_level_api_client.item(item_data) for item_data in items_data]
 
 class gw2:
     def __init__(self, bot):
