@@ -17,7 +17,7 @@
     "missing_parameter": "Paramètre manquant: {}",
     "invalid_parameter": "Paramètre invalide: {} ({})",
 		"no_key_passed": "Vous n'avez pas passé de clé.",
-		"no_key_exists": "Il n'existe pas de clé pour votre compte.",
+		"no_key_exists": "Il n'existe pas de clé pour votre compte. Crééz-en une avec sufisamment de permissions sur https://account.arena.net/applications et stockez la via la commande .storekey (en MP au bot).",
 		"key_exists_warning": "Il y a déjà une clé enregistrée pour votre compte. Vous devez la supprimer avant d'en ajouter une nouvelle."
 	},
 	"en":
