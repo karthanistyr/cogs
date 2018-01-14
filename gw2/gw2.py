@@ -57,24 +57,6 @@ class gw2_api_client:
         return daily_details
 
 class gw2_high_level_api_client:
-    def __init__(self):
-        self.rest_client = gw2_api_client()
-
-    def get_daily_achievements(self, tomorrow, category, lang=None):
-        api_client = gw2_api_client()
-        dailies = api_client.get_dailies(True if (tomorrow == "tomorrow") else False)
-
-        daily_ids = []
-        for daily in dailies[category]:
-            daily_ids.append(str(daily["id"]))
-
-        daily_details = api_client.get_daily_quest_details(",".join(daily_ids), lang)
-
-        achievement_list = []
-        for dailyd in daily_details:
-            achievement_list.append(achievement(dailyd["id"], dailyd))
-        return achievement_list
-
     class achievement_tier:
         def __init__(self, json=None):
             self.count = 0
@@ -114,6 +96,24 @@ class gw2_high_level_api_client:
             for tier in json["tiers"]:
                 self.tiers.append(achievement_tier(tier))
             self.rewards = []
+            
+    def __init__(self):
+        self.rest_client = gw2_api_client()
+
+    def get_daily_achievements(self, tomorrow, category, lang=None):
+        api_client = gw2_api_client()
+        dailies = api_client.get_dailies(True if (tomorrow == "tomorrow") else False)
+
+        daily_ids = []
+        for daily in dailies[category]:
+            daily_ids.append(str(daily["id"]))
+
+        daily_details = api_client.get_daily_quest_details(",".join(daily_ids), lang)
+
+        achievement_list = []
+        for dailyd in daily_details:
+            achievement_list.append(achievement(dailyd["id"], dailyd))
+        return achievement_list
 
 class gw2:
     def __init__(self, bot):
