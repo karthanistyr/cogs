@@ -409,6 +409,7 @@ class gw2:
 
         await self.bot.say(embed=em)
 
+
     @commands.command(pass_context=True)
     async def character(self, ctx, char_name):
         apiKey = self.getUserKey(ctx.message.author.id)
