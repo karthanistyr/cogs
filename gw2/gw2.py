@@ -360,7 +360,7 @@ class gw2_high_level_api_client:
 
         if(char_data.get("title", None) is not None):
             title = self.get_titles(char_data["title"], lang)
-            char.title = title
+            char.title = title[0]
 
         return char
 
