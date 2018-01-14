@@ -170,8 +170,8 @@ class gw2:
 
         em = discord.Embed(title=self.strings["daily_quests_embed_title"].format(category))
 
-        # for quest in daily_list:
-        #     em.add_field(name=quest.name, value="".format(quest.requirement), inline=False)
+        for quest in daily_list:
+            em.add_field(name=quest.name, value=quest.requirement, inline=False)
 
         await self.bot.say(embed=em)
 
