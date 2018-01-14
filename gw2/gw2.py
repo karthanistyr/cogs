@@ -68,7 +68,7 @@ class gw2_high_level_api_client:
         for daily in dailies[category]:
             daily_ids.append(str(daily["id"]))
 
-        daily_details = api_client.get_daily_quest_details(",".join(daily_ids), self.locale)
+        daily_details = api_client.get_daily_quest_details(",".join(daily_ids), lang)
 
         achievement_list = []
         for dailyd in daily_details:
