@@ -388,7 +388,7 @@ class gw2:
         api_client = gw2_high_level_api_client()
         char = api_client.get_character(apiKey, char_name)
 
-        em = discord.Embed(title=chars.name)
+        em = discord.Embed(title=char.name)
 
         em.add_field(name=self.strings["profession"], value=char.profession, inline=True)
         em.add_field(name=self.strings["level"], value=char.level, inline=True)
