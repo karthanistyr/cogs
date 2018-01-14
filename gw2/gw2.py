@@ -56,6 +56,16 @@ class gw2_api_client:
         daily_details = self.get_request(ep_daily_details, args)
         return daily_details
 
+    def get_items(self, ids, lang=None):
+        ep_items = "/v2/items"
+        args = {"ids": ids}
+
+        if(lang is not None):
+            args["lang"] = lang
+
+        items = self.get_request(ep_items, args)
+        return items
+
 class gw2_high_level_api_client:
 
     class item_details:
@@ -175,6 +185,10 @@ class gw2_high_level_api_client:
             for tier in json["tiers"]:
                 self.tiers.append(gw2_high_level_api_client.achievement_tier(tier))
             self.rewards = []
+            for rew in json["rewards"]:
+                if (rew["type"] == "Item"):
+                    item = self.rest_client.get_items(rew["id"])
+                    self.rewards.append(gw2_high_level_api_client.item(item))
 
     def __init__(self):
         self.rest_client = gw2_api_client()
