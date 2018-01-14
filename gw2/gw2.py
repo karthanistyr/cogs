@@ -354,9 +354,15 @@ class gw2_high_level_api_client:
         titles_data = self.rest_client.get_titles(ids, lang)
         return [gw2_high_level_api_client.title(title_data) for title_data in titles_data]
 
-    def get_character(self, key, char_name):
+    def get_character(self, key, char_name, lang=None):
         char_data = self.rest_client.get_characters(key, char_name)
-        return gw2_high_level_api_client.character(char_data)
+        char = gw2_high_level_api_client.character(char_data)
+
+        if(char_data.get("title", None) is not None):
+            title = self.get_titles(char_data["title"], lang)
+            char.title = title
+
+        return char
 
     def get_icons(self, ids=None):
         icon_data = self.rest_client.get_file_list(ids)
@@ -408,14 +414,14 @@ class gw2:
             return
 
         api_client = gw2_high_level_api_client()
-        char = api_client.get_character(apiKey, char_name)
+        char = api_client.get_character(apiKey, char_name, self.locale)
 
         #fetch relevant icons
         icons = api_client.get_icons("icon_{},icon_{}_big".format(char.profession.lower(), char.profession.lower()))
         icon_small = icons[0]
         icon_big = icons[1]
 
-        em = discord.Embed(title=char.name)
+        em = discord.Embed(title=char.title.name)
         em.set_author(name=char.name, icon_url=icon_small.icon)
         em.set_thumbnail(url=icon_big.icon)
         em.add_field(name=self.strings["profession"], value=char.profession, inline=True)
