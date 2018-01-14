@@ -287,7 +287,8 @@ class gw2:
 
         for quest in daily_list:
             rewards_text = ", ".join(["{} x{}".format(reward.item.name, reward.count) for reward in quest.rewards])
-            em.add_field(name=quest.name, value="{}\n{}: {}\n".format(quest.requirement, self.strings["rewards"], rewards_text), inline=False)
+            tiers_text = ", ".join(["{} (+{} pts)".format(tier.count, tier.points) for tier in quest.tiers])
+            em.add_field(name=quest.name, value="{}\n{}: {}\n{}: {}\n".format(quest.requirement, self.strings["tiers"], tiers_text, self.strings["rewards"], rewards_text), inline=False)
 
         await self.bot.say(embed=em)
 
