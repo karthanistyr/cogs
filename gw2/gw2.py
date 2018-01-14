@@ -421,6 +421,7 @@ class gw2:
 
         if(char is None):
             await self.bot.say("Personnage introuvable.")
+            return
 
         #fetch relevant icons
         icons = api_client.get_icons("icon_{},icon_{}_big".format(char.profession.lower(), char.profession.lower()))
