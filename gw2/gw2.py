@@ -250,7 +250,8 @@ class gw2:
         em = discord.Embed(title=self.strings["daily_quests_embed_title"].format(category))
 
         for quest in daily_list:
-            em.add_field(name=quest.name, value=quest.requirement, inline=False)
+            rewards_text = ", ".join(quest.rewards)
+            em.add_field(name=quest.name, value="{}\nRewards: {}\n".format(quest.requirement, rewards_text), inline=False)
 
         await self.bot.say(embed=em)
 
