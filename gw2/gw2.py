@@ -66,7 +66,32 @@ class gw2_api_client:
         items = self.get_request(ep_items, args)
         return items
 
+    def get_titles(self, ids, lang=None):
+        ep_titles = "/v2/titles"
+        args = {"ids": ids}
+
+        if(lang is not None):
+            args["lang"] = lang
+
+        titles = self.get_request(ep_titles, args)
+        return titles
+
 class gw2_high_level_api_client:
+
+    class title:
+        def __init__(self, json=None):
+            self.id = None
+            self.name = None
+
+            if(json is not None):
+                self.load_from_json(json)
+
+        def load_from_json(self, json):
+            self.id = json.get("id", None)
+            self.name = json.get("name", None)
+
+        def __str__(self):
+            return "{}".format(self.name)
 
     class item_details:
         def __init__(self, json=None):
@@ -141,6 +166,7 @@ class gw2_high_level_api_client:
             self.id = None
             self.count = None
             self.item = None
+            self.title = None
 
             if(json is not None):
                 self.load_from_json(json)
@@ -153,9 +179,14 @@ class gw2_high_level_api_client:
         def load_item_data(self, item):
             self.item = item
 
+        def load_title_data(self, title):
+            self.title = title
+
         def __str__(self):
             if(self.item is not None):
-                return "{} x{}".format(str(self.item), self.count)
+                return "{} x{}".format(self.item.name, self.count)
+            if(self.title is not None):
+                return "{}".format(self.title.name)
             else:
                 return "{} ({}) x{}".format(self.type, self.id, self.count)
 
@@ -206,15 +237,13 @@ class gw2_high_level_api_client:
 
     def get_daily_achievements(self, tomorrow, category, lang=None):
         dailies = self.rest_client.get_dailies(True if (tomorrow == "tomorrow") else False)
+        return self.get_achievements([",".join(d["id"]) for d in dailies])
 
-        daily_ids = []
-        for daily in dailies[category]:
-            daily_ids.append(str(daily["id"]))
-
-        daily_details = self.rest_client.get_daily_quest_details(",".join(daily_ids), lang)
+    def get_achievements(self, ids, lang=None):
+        achievement_details = self.rest_client.get_daily_quest_details(ids, lang)
 
         #bulk up item rewards lookups
-        items_ids = ",".join([str(qr["id"]) for dq in daily_details for qr in dq["rewards"] if qr["type"] == "Item"])
+        items_ids = ",".join([str(qr["id"]) for ach in achievement_details for qr in ach["rewards"] if qr["type"] == "Item"])
         reward_items = self.get_items(items_ids, lang)
         items_data = {}
         for data in reward_items:
@@ -226,14 +255,17 @@ class gw2_high_level_api_client:
             for reward in ach.rewards:
                 if(reward.type == "Item"):
                     reward.item = items_data[reward.id]
+
             achievement_list.append(ach)
         return achievement_list
 
     def get_items(self, ids, lang=None):
-        api_client = gw2_api_client()
-        items_data = api_client.get_items(ids, lang)
-
+        items_data = self.rest_client.get_items(ids, lang)
         return [gw2_high_level_api_client.item(item_data) for item_data in items_data]
+
+    def get_titles(self, ids, lang=None):
+        titles_data = self.rest_client.get_titles(ids, lang)
+        return [gw2_high_level_api_client.title(title_data) for title_data in titles_data]
 
 class gw2:
     def __init__(self, bot):
@@ -291,7 +323,7 @@ class gw2:
         em = discord.Embed(title=self.strings["daily_quests_embed_title"].format(category))
 
         for quest in daily_list:
-            rewards_text = ", ".join(["{} x{}".format(reward.item.name, reward.count) for reward in quest.rewards])
+            rewards_text = ", ".join(["{}".format(str(reward)) for reward in quest.rewards])
             tiers_text = ", ".join(["{} {} (+{} pts)".format(tier.count, self.strings["times"], tier.points) for tier in quest.tiers])
             em.add_field(name=quest.name, value="{}\n{}: {}\n{}: {}\n".format(quest.requirement, self.strings["tiers"], tiers_text, self.strings["rewards"], rewards_text), inline=False)
 
@@ -311,7 +343,6 @@ class gw2:
             keys[ctx.message.author.id] = apiKey
 
         self.writeKeys(keys)
-
         await self.bot.say(self.strings["command_completed"])
 
     @commands.command(pass_context=True)
