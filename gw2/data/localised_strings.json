@@ -3,6 +3,7 @@
 	{
 		"characters_title": "Personnages de {}",
     "daily_quests_embed_title": "Quêtes journalières: {}",
+    "rewards": "Récompenses",
 		"command_completed": "Commande effectuée.",
     "missing_parameter": "Paramètre manquant: {}",
     "invalid_parameter": "Paramètre invalide: {} ({})",
@@ -14,6 +15,7 @@
 	{
 		"characters_title": "{}'s characters",
     "daily_quests_embed_title": "Daily quests: {}",
+    "rewards": "Rewards",
 		"command_completed": "Command completed.",
     "missing_parameter": "Missing parameter: {}",
     "invalid_parameter": "Invalid parameter: {} ({})",

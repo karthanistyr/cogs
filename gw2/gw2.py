@@ -287,7 +287,7 @@ class gw2:
 
         for quest in daily_list:
             rewards_text = ", ".join(["{} x{}".format(reward.item.name, reward.count) for reward in quest.rewards])
-            em.add_field(name=quest.name, value="{}\nRewards: {}\n".format(quest.requirement, rewards_text), inline=False)
+            em.add_field(name=quest.name, value="{}\n{}: {}\n".format(quest.requirement, self.strings["rewards"], rewards_text), inline=False)
 
         await self.bot.say(embed=em)
 
