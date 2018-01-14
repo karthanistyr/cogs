@@ -57,6 +57,85 @@ class gw2_api_client:
         return daily_details
 
 class gw2_high_level_api_client:
+
+    class item_details:
+        def __init__(self, json=None):
+            self.type = None
+            self.damage_type = None
+            self.weight_class = None
+            self.min_power = None
+            self.max_power = None
+            self.defense = None
+            self.infusion_slots = []
+            self.infix_upgrade = None # TODO: infix_upgrade type
+            self.suffix_item_id = None # type item
+            self.secondary_suffix_item_id = None # type item
+
+            if(json is not None):
+                self.load_from_json(json)
+
+        def load_from_json(self, json):
+            self.type = json.get("type", None)
+            self.damage_type = json.get("damage_type", None)
+            self.weight_class = json.get("weight_class", None)
+            self.min_power = json.get("min_power", None)
+            self.max_power = json.get("max_power", None)
+            self.defense = json.get("defense", None)
+            self.infusion_slots = [] # TODO
+            self.infix_upgrade = None # TODO: infix_upgrade type
+            self.suffix_item_id = None # type item # TODO
+            self.secondary_suffix_item_id = None # type item # TODO
+
+    class item:
+        def __init__(self, json=None):
+            self.name = None
+            self.description = None
+            self.type = None
+            self.level = None
+            self.rarity = None
+            self.vendor_value = None
+            self.default_skin = None
+            self.game_types = []
+            self.flags = []
+            self.restrictions = []
+            self.id = None
+            self.chat_link = None
+            self.icon = None
+            self.details = None # type: item_details
+
+            if(json is not None):
+                self.load_from_json(json)
+
+        def load_from_json(self, json):
+            self.name = json.get("name", None)
+            self.description = json.get("description", None)
+            self.type = json.get("type", None)
+            self.level = json.get("level", None)
+            self.rarity = json.get("rarity", None)
+            self.vendor_value = json.get("vendor_value", None)
+            self.default_skin = json.get("default_skin", None)
+            self.game_types = json.get("game_types", None)
+            self.flags = json.get("flags", None)
+            self.restrictions = json.get("restrictions", None)
+            self.id = json.get("id", None)
+            self.chat_link = json.get("chat_link", None)
+            self.icon = json.get("icon", None)
+            self.details = gw2_high_level_api_client.item_details(json["details"]) # type: item_details
+
+    class achievement_reward:
+        def __init__(self, json=None):
+            self.type = None
+            self.id = None
+            self.count = 0
+
+            if(json is not None):
+                self.load_from_json(json)
+
+        def load_from_json(self, json):
+            self.type = json.get("type", None)
+            self.id = json.get("id", None)
+            self.count = json.get("count", None)
+
     class achievement_tier:
         def __init__(self, json=None):
             self.count = 0
@@ -66,8 +145,8 @@ class gw2_high_level_api_client:
                 self.load_from_json(json)
 
         def load_from_json(self, json: dict):
-            self.count = json["count"]
-            self.points = json["points"]
+            self.count = json.get("count", None)
+            self.points = json.get("points", None)
 
     class achievement:
         def __init__(self, id, json=None):
@@ -85,13 +164,13 @@ class gw2_high_level_api_client:
                 self.load_from_json(json)
 
         def load_from_json(self, json: dict):
-            self.id = json["id"]
-            self.name = json["name"]
-            self.description = json["description"]
-            self.requirement = json["requirement"]
-            self.locked_text = json["locked_text"]
-            self.type = json["type"]
-            self.flags = json["flags"]
+            self.id = json.get("id", None)
+            self.name = json.get("name", None)
+            self.description = json.get("description", None)
+            self.requirement = json.get("requirement", None)
+            self.locked_text = json.get("locked_text", None)
+            self.type = json.get("type", None)
+            self.flags = json.get("flags", None)
             self.tiers = []
             for tier in json["tiers"]:
                 self.tiers.append(gw2_high_level_api_client.achievement_tier(tier))
