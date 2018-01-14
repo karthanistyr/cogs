@@ -35,6 +35,13 @@ class gw2_api_client:
         if(get_response.status_code == 200):
             return get_response.json()
 
+    def get_file_list(self, ids=None):
+        ep_files = "/v2/files"
+        args = {"ids": "all" if ids is None else ids}
+
+        files_data = self.get_request(ep_files, args)
+        return files_data
+
     def get_characters(self, api_key, char_name=None):
         ep = "/v2/characters"
 
@@ -83,6 +90,17 @@ class gw2_api_client:
         return titles
 
 class gw2_high_level_api_client:
+    class icon:
+        def __init__(self, json=None):
+            self.id = None
+            self.icon = None
+
+            if(json is not None):
+                self.load_from_json(json)
+
+        def load_from_json(self, json):
+            self.id = json.get("id", None)
+            self.icon = json.get("icon", None)
 
     class title:
         def __init__(self, json=None):
@@ -340,6 +358,10 @@ class gw2_high_level_api_client:
         char_data = self.rest_client.get_characters(key, char_name)
         return gw2_high_level_api_client.character(char_data)
 
+    def get_icons(self, ids=None):
+        icon_data = self.rest_client.get_file_list(ids)
+        return [gw2_high_level_api_client.icon(icon) for icon in icon_data]
+
 class gw2:
     def __init__(self, bot):
         self.bot = bot
@@ -388,8 +410,14 @@ class gw2:
         api_client = gw2_high_level_api_client()
         char = api_client.get_character(apiKey, char_name)
 
-        em = discord.Embed(title=char.name)
+        #fetch relevant icons
+        icons = api_client.get_icons("icon_{},icon_{}_big")
+        icon_small = icons[0]
+        icon_big = icons[1]
 
+        em = discord.Embed(title=char.name)
+        em.set_author(name=self.bot.name, icon_url=icon_small.icon)
+        em.set_thumbnail(url=icon_big.icon)
         em.add_field(name=self.strings["profession"], value=char.profession, inline=True)
         em.add_field(name=self.strings["level"], value=char.level, inline=True)
         em.add_field(name=self.strings["race"], value=char.race, inline=True)
