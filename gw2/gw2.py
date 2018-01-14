@@ -94,9 +94,9 @@ class gw2_high_level_api_client:
             self.flags = json["flags"]
             self.tiers = []
             for tier in json["tiers"]:
-                self.tiers.append(achievement_tier(tier))
+                self.tiers.append(gw2_high_level_api_client.achievement_tier(tier))
             self.rewards = []
-            
+
     def __init__(self):
         self.rest_client = gw2_api_client()
 
@@ -112,7 +112,7 @@ class gw2_high_level_api_client:
 
         achievement_list = []
         for dailyd in daily_details:
-            achievement_list.append(achievement(dailyd["id"], dailyd))
+            achievement_list.append(gw2_high_level_api_client.achievement(dailyd["id"], dailyd))
         return achievement_list
 
 class gw2:
