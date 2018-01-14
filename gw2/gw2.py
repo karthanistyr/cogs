@@ -146,6 +146,9 @@ class gw2_high_level_api_client:
             self.id = json.get("id", None)
             self.count = json.get("count", None)
 
+        def __str__(self):
+            return "{} ({}) x{}".format(self.type, self.id, self.count)
+
     class achievement_tier:
         def __init__(self, json=None):
             self.count = 0
