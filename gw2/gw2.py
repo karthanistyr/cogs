@@ -3,6 +3,7 @@ import datetime
 from enum import Enum
 from .utils.dataIO import fileIO
 from discord.ext import commands
+from gw2api.model.Query import Querier
 
 #from https://wiki.guildwars2.com/wiki/Template:Rarity
 class gw2_constants:
@@ -46,15 +47,14 @@ class gw2:
             await self.bot.say(self.strings["no_key_exists"])
             return
 
-        api_client = gw2_api_v2_client()
+        api_client = Querier()
         chars = api_client.get_characters(apiKey)
 
         em = discord.Embed(title=self.strings["characters_title"].format(ctx.message.author.name))
         for char in chars:
-            em.add_field(name="char", value=char, inline=True)
+            em.add_field(value=char, inline=True)
 
         await self.bot.say(embed=em)
-
 
     @commands.command(pass_context=True)
     async def character(self, ctx, char_name):
@@ -63,49 +63,20 @@ class gw2:
             await self.bot.say(self.strings["no_key_exists"])
             return
 
-        api_client = querier()
-        char = api_client.get_character(apiKey, char_name, self.locale)
+        api_client = Querier()
+        char = api_client.get_character(char_name, self.locale, apiKey)
 
-        if(char is None):
+        if(not char.has_loaded):
             await self.bot.say("Personnage introuvable.")
             return
 
-        #fetch relevant icons
-        icons = api_client.get_icons("icon_{},icon_{}_big".format(char.profession.lower(), char.profession.lower()))
-        icon_small = icons[0]
-        icon_big = icons[1]
-
-        em = discord.Embed(title=char.title.name if char.title is not None else None)
-        em.set_author(name=char.name, icon_url=icon_small.icon)
-        em.set_thumbnail(url=icon_big.icon)
-        em.add_field(name=self.strings["profession"], value=char.profession, inline=True)
-        em.add_field(name=self.strings["level"], value=char.level, inline=True)
-        em.add_field(name=self.strings["race"], value=char.race, inline=True)
-        em.add_field(name=self.strings["death"], value="{} {}".format(char.deaths, self.strings["times"]), inline=True)
-        em.add_field(name=self.strings["age"], value="{}".format(str(datetime.timedelta(seconds=char.age))), inline=True)
-
-        await self.bot.say(embed=em)
-
-    @commands.command()
-    async def dailies(self, category, tomorrow=None):
-        if(category is None):
-            await self.bot.say(self.strings["missing_parameter"].format("category"))
-            return
-
-        valid_categories = {"pve", "pvp", "wvw", "fractals", "special"}
-        if(category not in valid_categories):
-            await self.bot.say(self.strings["invalid_parameter"].format(category, "category"))
-            return
-
-        api_client = querier()
-        daily_list = api_client.get_daily_achievements(True if (tomorrow == "tomorrow") else False, category, self.locale)
-
-        em = discord.Embed(title=self.strings["daily_quests_embed_title"].format(category))
-
-        for quest in daily_list:
-            rewards_text = ", ".join(["{}".format(str(reward)) for reward in quest.rewards])
-            tiers_text = ", ".join(["{} {} (+{} pts)".format(tier.count, self.strings["times"], tier.points) for tier in quest.tiers])
-            em.add_field(name=quest.name, value="{}\n{}: {}\n{}: {}\n".format(quest.requirement, self.strings["tiers"], tiers_text, self.strings["rewards"], rewards_text), inline=False)
+        em = discord.Embed(title=char.object.title.object.name if char.title.has_loaded else None)
+        em.set_author(name=char.object.name)
+        em.add_field(name=self.strings["profession"], value=char.object.profession, inline=True)
+        em.add_field(name=self.strings["level"], value=char.object.level, inline=True)
+        em.add_field(name=self.strings["race"], value=char.object.race, inline=True)
+        em.add_field(name=self.strings["death"], value="{} {}".format(char.object.deaths, self.strings["times"]), inline=True)
+        em.add_field(name=self.strings["age"], value="{}".format(str(datetime.timedelta(seconds=char.object.age))), inline=True)
 
         await self.bot.say(embed=em)
 

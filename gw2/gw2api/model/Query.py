@@ -40,6 +40,11 @@ class Querier:
 
         return returned_items
 
+    @privileged
+    def _get_characters(self, name, lang, api_key):
+        character_names = self.rest_client.get_characters(api_key)
+        return character_names
+
     def _get_itemstats(self, ids, lang=None):
         itemstats_data = self.rest_client.get_itemstats(ids, lang)
         returned_items = []
@@ -247,6 +252,9 @@ class Querier:
     @_depth_fetch
     def get_character(self, name, lang=None, api_key=None):
         return LoadableObjectContainer(name, LoadableTypeEnum.Character)
+
+    def get_characters(self, api_key):
+        return self._get_characters(None, None, api_key)
 
     @_depth_fetch
     def get_masteries(self, ids, lang=None):
