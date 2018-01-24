@@ -52,7 +52,7 @@ class gw2:
 
         em = discord.Embed(title=self.strings["characters_title"].format(ctx.message.author.name))
         for char in chars:
-            em.add_field(value=char, inline=True)
+            em.add_field(name="Personnage", value=char, inline=True)
 
         await self.bot.say(embed=em)
 
