@@ -1,4 +1,4 @@
-from gw2api.model.Gw2LoadableObject import LoadableObjectBase, LoadableTypeEnum
+from gw2api.model.LoadableObject import LoadableObjectBase, LoadableTypeEnum
 
 # TODO: complete implementation
 class Skill(LoadableObjectBase):

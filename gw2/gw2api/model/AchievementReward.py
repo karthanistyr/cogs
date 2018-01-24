@@ -1,5 +1,5 @@
 from enum import Enum
-from gw2api.model.Gw2LoadableObject import LoadableObjectContainer, LoadableTypeEnum
+from gw2api.model.LoadableObject import LoadableObjectContainer, LoadableTypeEnum
 
 class RewardType(Enum):
     Coins = "Coins"

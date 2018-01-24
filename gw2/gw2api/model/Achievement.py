@@ -1,5 +1,5 @@
 from enum import Enum
-from gw2api.model.Gw2LoadableObject import LoadableObjectBase, LoadableTypeEnum
+from gw2api.model.LoadableObject import LoadableObjectBase, LoadableTypeEnum
 from gw2api.model.AchievementReward import *
 
 class AchievementTypeEnum(Enum):
@@ -34,7 +34,7 @@ class AchievementTier:
 
 class Achievement(LoadableObjectBase):
     def __init__(self, id):
-        super().__init__(id, LoadableTypeEnum.Achievement)
+        self.id = id
         self.name = None
         self.description = None
         self.requirement = None
@@ -73,4 +73,4 @@ class Achievement(LoadableObjectBase):
                 if(reward["type"] == RewardType.Title.value):
                     self.rewards.append(AchievementRewardTitle(reward))
                 if(reward["type"] == RewardType.Mastery.value):
-                    self.rewards.append(AchievementRewardCoins(reward))
+                    self.rewards.append(AchievementRewardMastery(reward))

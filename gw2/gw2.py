@@ -1,12 +1,8 @@
 import discord
-import requests
-import urllib
 import datetime
 from enum import Enum
 from .utils.dataIO import fileIO
 from discord.ext import commands
-from gw2api.model import querier
-from gw2api.client import gw2_api_v2_client
 
 #from https://wiki.guildwars2.com/wiki/Template:Rarity
 class gw2_constants:

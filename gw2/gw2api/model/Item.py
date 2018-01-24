@@ -1,5 +1,5 @@
 from enum import Enum
-from gw2api.model.Gw2LoadableObject import LoadableTypeEnum, LoadableObjectBase, LoadableObjectContainer
+from gw2api.model.LoadableObject import LoadableTypeEnum, LoadableObjectBase, LoadableObjectContainer
 from gw2api.model.Skill import Skill
 
 class ItemType(Enum):
@@ -113,7 +113,7 @@ class ItemStat(LoadableObjectBase):
     def _populate_inner(self, json):
         self.name = json.get("name", None)
         for attr_mod_data in json["attributes"]:
-            self.attributes.append(AttributeModifier(attr_mod_data))
+            self.attributes.append(AttributeModifier({attr_mod_data: json["attributes"][attr_mod_data]}))
 
 class HasInfusion:
     def __init__(self):
@@ -266,6 +266,18 @@ class Gizmo(Item):
         details_json = json["details"]
 
         self.subtype = details_json.get("type", None)
+
+class MiniPet(Item):
+    def __init__(self, id):
+        Item.__init__(self, id)
+
+        self.minipet = None
+
+    def _populate_inner(self, json):
+        super()._populate_inner(json)
+        details_json = json["details"]
+
+        self.minipet = LoadableObjectContainer(json["minipet_id"], LoadableTypeEnum.MiniPet)
 
 class SalvageKit(Item):
     def __init__(self, id):
