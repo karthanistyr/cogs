@@ -70,7 +70,7 @@ class gw2:
             await self.bot.say("Personnage introuvable.")
             return
 
-        em = discord.Embed(title="_{}_".format(char.object.title.object.name if (char.object.title is not None and char.object.title.has_loaded) else self.strings["titleless"])
+        em = discord.Embed(title="_{}_".format(char.object.title.object.name if (char.object.title is not None and char.object.title.has_loaded) else self.strings["titleless"]))
         em.set_author(name=char.object.name)
         em.add_field(name=self.strings["profession"], value=char.object.profession, inline=True)
         em.add_field(name=self.strings["level"], value=char.object.level, inline=True)
