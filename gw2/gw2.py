@@ -103,7 +103,7 @@ class gw2:
         return match is not None
 
     @commands.command()
-    async def storeguildkey(self, guild_acronym, api_key=None)
+    async def storeguildkey(self, guild_acronym, api_key=None):
         if(apiKey is None):
             await self.bot.say(self.strings["no_key_passed"])
             return
