@@ -30,14 +30,20 @@ class gw2:
         self.strings = self.locales[self.locale]
 
     def loadApiKeys(self):
-        keys = dataIO.load_json("data/gw2/api_keys.json")
+        keys = {}
+        filename = "data/gw2/api_keys.json"
+        if(dataIO.is_valid_json(filename)):
+            keys = dataIO.load_json(filename)
         return keys
 
     def writeKeys(self, keys):
         dataIO.save_json("data/gw2/api_keys.json", keys)
 
     def loadGuildKeys(self):
-        keys = dataIO.load_json("data/gw2/guild_keys.json")
+        keys = {}
+        filename = "data/gw2/guild_keys.json"
+        if(dataIO.is_valid_json(filename)):
+            keys = dataIO.load_json(filename)
         return keys
 
     def write_guild_keys(self, keys):
@@ -122,6 +128,9 @@ class gw2:
             await self.bot.say(self.strings["key_exists_warning"])
         else:
             keys[guild_acronym] = api_key
+
+        self.write_guild_keys(keys)
+        await self.bot.say(self.strings["command_completed"])
 
     @commands.command()
     async def deleteguildkey(self, guild_acronym):
