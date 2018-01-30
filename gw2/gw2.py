@@ -104,7 +104,7 @@ class gw2:
         return match is not None
 
     def validate_string_input(self, str, min_length=3, max_length=20, allowed_chars="[a-zA-Z0-9]"):
-        rgxp_pattern = "^{}{{},{}}$".format(allowed_chars, min_length, max_length)
+        rgxp_pattern = "^{}{{{},{}}}$".format(allowed_chars, min_length, max_length)
         match = re.match(rgxp_pattern, str)
         return match is not None
 
