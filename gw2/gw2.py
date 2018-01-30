@@ -133,7 +133,7 @@ class gw2:
 
     @commands.command()
     async def deleteguildkey(self, guild_acronym):
-        if(not validate_string_input(guild_acronym)):
+        if(not self.validate_string_input(guild_acronym)):
             await self.bot.say(self.strings["wrong_guild_alias_format"])
             return
 
