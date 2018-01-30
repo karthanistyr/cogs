@@ -128,9 +128,8 @@ class gw2:
             await self.bot.say(self.strings["key_exists_warning"])
         else:
             keys[guild_acronym] = api_key
-
-        self.write_guild_keys(keys)
-        await self.bot.say(self.strings["command_completed"])
+            self.write_guild_keys(keys)
+            await self.bot.say(self.strings["command_completed"])
 
     @commands.command()
     async def deleteguildkey(self, guild_acronym):
@@ -142,9 +141,8 @@ class gw2:
 
         if(guild_acronym in keys):
             del keys[guild_acronym]
-
-        self.write_guild_keys(keys)
-        await self.bot.say(self.strings["command_completed"])
+            self.write_guild_keys(keys)
+            await self.bot.say(self.strings["command_completed"])
 
     @commands.command(pass_context=True)
     async def storekey(self, ctx, api_key=None):
@@ -162,9 +160,8 @@ class gw2:
             await self.bot.say(self.strings["key_exists_warning"])
         else:
             keys[ctx.message.author.id] = api_key
-
-        self.writeKeys(keys)
-        await self.bot.say(self.strings["command_completed"])
+            self.writeKeys(keys)
+            await self.bot.say(self.strings["command_completed"])
 
     @commands.command(pass_context=True)
     async def deletekey(self, ctx):
@@ -173,9 +170,8 @@ class gw2:
 
         if(ctx.message.author.id in keys):
             del keys[ctx.message.author.id]
-
-        self.writeKeys(keys)
-        await self.bot.say(self.strings["command_completed"])
+            self.writeKeys(keys)
+            await self.bot.say(self.strings["command_completed"])
 
 def setup(bot):
     bot.add_cog(gw2(bot))
