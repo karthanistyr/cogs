@@ -110,7 +110,7 @@ class gw2:
 
     @commands.command()
     async def storeguildkey(self, guild_acronym, api_key=None):
-        if(apiKey is None):
+        if(api_key is None):
             await self.bot.say(self.strings["no_key_passed"])
             return
 
@@ -147,8 +147,8 @@ class gw2:
         await self.bot.say(self.strings["command_completed"])
 
     @commands.command(pass_context=True)
-    async def storekey(self, ctx, apiKey=None):
-        if(apiKey is None):
+    async def storekey(self, ctx, api_key=None):
+        if(api_key is None):
             await self.bot.say(self.strings["no_key_passed"])
             return
 
@@ -161,7 +161,7 @@ class gw2:
         if(ctx.message.author.id in keys):
             await self.bot.say(self.strings["key_exists_warning"])
         else:
-            keys[ctx.message.author.id] = apiKey
+            keys[ctx.message.author.id] = api_key
 
         self.writeKeys(keys)
         await self.bot.say(self.strings["command_completed"])
