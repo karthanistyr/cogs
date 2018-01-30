@@ -114,11 +114,11 @@ class gw2:
             await self.bot.say(self.strings["no_key_passed"])
             return
 
-        if(not validate_api_key_format(api_key)):
+        if(not self.validate_api_key_format(api_key)):
             await self.bot.say(self.strings["wrong_key_format"])
             return
 
-        if(not validate_string_input(guild_acronym)):
+        if(not self.validate_string_input(guild_acronym)):
             await self.bot.say(self.strings["wrong_guild_alias_format"])
             return
 
@@ -152,7 +152,7 @@ class gw2:
             await self.bot.say(self.strings["no_key_passed"])
             return
 
-        if(not validate_api_key_format(api_key)):
+        if(not self.validate_api_key_format(api_key)):
             await self.bot.say(self.strings["wrong_key_format"])
             return
 
