@@ -1,7 +1,8 @@
 import discord
 import datetime
+import re
 from enum import Enum
-from .utils.dataIO import fileIO
+from .utils.dataIO import dataIO
 from discord.ext import commands
 from gw2api.model.Query import Querier
 
@@ -21,7 +22,7 @@ class gw2_constants:
 class gw2:
     def __init__(self, bot):
         self.bot = bot
-        self.locales = fileIO("data/gw2/localised_strings.json", "load")
+        self.locales = dataIO.load_json("data/gw2/localised_strings.json")
 
         #default (hardcode) to french locale for now
         self.locale = "fr"
@@ -29,11 +30,18 @@ class gw2:
         self.strings = self.locales[self.locale]
 
     def loadApiKeys(self):
-        keys = fileIO("data/gw2/api_keys.json", "load")
+        keys = dataIO.load_json("data/gw2/api_keys.json")
         return keys
 
     def writeKeys(self, keys):
-        fileIO("data/gw2/api_keys.json", "save", keys)
+        dataIO.save_json("data/gw2/api_keys.json", keys)
+
+    def loadGuildKeys(self):
+        keys = dataIO.load_json("data/gw2/guild_keys.json")
+        return keys
+
+    def write_guild_keys(self, keys):
+        dataIO.save_json("data/gw2/guild_keys.json", keys)
 
     def getUserKey(self, userId):
         keys = self.loadApiKeys()
@@ -80,10 +88,63 @@ class gw2:
 
         await self.bot.say(embed=em)
 
+    def validate_api_key_format(self, api_key):
+    # example format:
+    # 12345678-ABCD-1234-ABCD-0123456789ABCDEF0123-1234-ABCD-1234-1A2B3C4D5E6F
+        pattern =  "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}"
+        pattern += "-[a-fA-F0-9]{4}-[a-fA-F0-9]{20}-[a-fA-F0-9]{4}"
+        pattern += "-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        match = re.match(pattern, api_key)
+        return match is not None
+
+    def validate_string_input(self, str, min_length=3, max_length=20, allowed_chars="[a-zA-Z0-9]"):
+        rgxp_pattern = "^{}{{},{}}$".format(allowed_chars, min_length, max_length)
+        match = re.match(rgxp_pattern, str)
+        return match is not None
+
+    @commands.command()
+    async def storeguildkey(self, guild_acronym, api_key=None)
+        if(apiKey is None):
+            await self.bot.say(self.strings["no_key_passed"])
+            return
+
+        if(not validate_api_key_format(api_key)):
+            await self.bot.say(self.strings["wrong_key_format"])
+            return
+
+        if(not validate_string_input(guild_acronym)):
+            await self.bot.say(self.strings["wrong_guild_alias_format"])
+            return
+
+        keys = self.loadGuildKeys()
+
+        if(guild_acronym in keys):
+            await self.bot.say(self.strings["key_exists_warning"])
+        else:
+            keys[guild_acronym] = api_key
+
+    @commands.command()
+    async def deleteguildkey(self, guild_acronym):
+        if(not validate_string_input(guild_acronym)):
+            await self.bot.say(self.strings["wrong_guild_alias_format"])
+            return
+
+        keys = self.loadGuildKeys()
+
+        if(guild_acronym in keys):
+            del keys[guild_acronym]
+
+        self.write_guild_keys(keys)
+        await self.bot.say(self.strings["command_completed"])
+
     @commands.command(pass_context=True)
     async def storekey(self, ctx, apiKey=None):
         if(apiKey is None):
             await self.bot.say(self.strings["no_key_passed"])
+            return
+
+        if(not validate_api_key_format(api_key)):
+            await self.bot.say(self.strings["wrong_key_format"])
             return
 
         keys = self.loadApiKeys()

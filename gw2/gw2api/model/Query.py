@@ -6,6 +6,8 @@ from gw2api.model.Skill import Skill
 from gw2api.model.Skin import Skin
 from gw2api.model.Title import Title
 from gw2api.model.Character import Character
+from gw2api.model.Guild import Guild
+
 from gw2api.model.LoadableObject import LoadableObjectContainer, LoadableObjectVisitorBase
 from gw2api.client.Gw2RestClient import Gw2RestClient
 
@@ -44,6 +46,17 @@ class Querier:
     def _get_characters(self, name, lang, api_key):
         character_names = self.rest_client.get_characters(api_key)
         return character_names
+
+    @privileged
+    def _get_guild(self, id, api_key):
+        guild_data = self.rest_client.get_guild(id, api_key)
+
+        guild = None
+        if(guild_data is not None):
+            guild = Guild(id)
+            guild.populate(guild_data)
+
+        return guild
 
     def _get_itemstats(self, ids, lang=None):
         itemstats_data = self.rest_client.get_itemstats(ids, lang)
@@ -193,6 +206,8 @@ class Querier:
                 loadable_masteries = {}
                 loadable_titles = {}
                 loadable_characters = {}
+                loadable_guilds = {}
+                loadable_guildupgrades = {}
 
                 #populate the collections
                 for index in items_to_load:
@@ -212,6 +227,10 @@ class Querier:
                         loadable_masteries[items_to_load[index].id] = items_to_load[index]
                     if(items_to_load[index].loadable_type == LoadableTypeEnum.Character):
                         loadable_characters[items_to_load[index].id] = items_to_load[index]
+                    if(items_to_load[index].loadable_type == LoadableTypeEnum.Guild):
+                        loadable_guilds[items_to_load[index].id] = items_to_load[index]
+                    if(items_to_load[index].loadable_type == LoadableTypeEnum.GuildUpgrade):
+                        loadable_guildupgrades[items_to_load[index].id] = items_to_load[index]
 
 
                 #bulk fetch items

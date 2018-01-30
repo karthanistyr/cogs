@@ -38,7 +38,7 @@ class Gw2RestClient:
         char_data = self.get_request(ep + "/" + safe_char_name, None, api_key)
         return char_data
 
-    def get_dailies(self, tomorrow: bool=None):
+    def get_dailies(self, tomorrow: bool=False):
         ep_today = "/v2/achievements/daily"
         ep_tomorrow = ep_today + "/tomorrow"
 
@@ -134,3 +134,18 @@ class Gw2RestClient:
 
         minis_data = self.get_request(ep_minis, args)
         return minis_data
+
+    def get_guild(self, id, api_key):
+        ep_guild = "/v2/guild/{}"
+
+        guild_data = self.get_request(ep_guild.format(id), None, api_key)
+        return guild_data
+
+    def get_guild_log(self, id, api_key, nb_lines=None):
+        ep_guild_log = "/v2/guild/{}/log"
+
+        log_data = self.get_request(ep_guild_log.format(id), None, api_key)
+        if(nb_lines is not None):
+            log_data = log_data[:nb_lines]
+
+        return log_data

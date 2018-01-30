@@ -4,6 +4,8 @@ from enum import Enum
 class LoadableTypeEnum(Enum):
     Achievement = "Achievement"
     Character = "Character"
+    Guild = "Guild"
+    GuildUpgrade = "GuildUpgrade"
     Item = "Item"
     ItemStat = "ItemStat"
     Mastery = "Mastery"
