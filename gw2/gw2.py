@@ -59,7 +59,7 @@ class gw2:
         if(guild_acronym in keys):
             return keys[guild_acronym]
 
-    def translate_log_entry(log_entry):
+    def translate_log_entry(self, log_entry):
         if(log_entry.type == "joined"):
             return self.strings["log_entry_joined_mask"].format(new_joiner=log_entry.user)
         if(log_entry.type == "invited"):
