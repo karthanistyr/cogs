@@ -57,23 +57,36 @@ class gw2:
     def get_guild_key(self, guild_acronym):
         keys = self.loadGuildKeys()
         if(guild_acronym in keys):
-            return keys[guild_acronym]["api_key"]
+            return keys[guild_acronym]
 
     @commands.command()
     async def guild(self, guild_acronym, guild_command, lines=10):
+
+        def display_guild_details(guild_details):
+            if(not guild_details.has_loaded):
+                return
+            em = discord.Embed(title=guild_details.object.name)
+            await self.bot.say(embed=em)
+
         if(not self.validate_string_input(guild_acronym)):
             await self.bot.say(self.strings["wrong_guild_alias_format"])
             return
 
-        api_key = self.get_guild_key(guild_acronym)
-        if(api_key is None):
+        guild_creds = self.get_guild_key(guild_acronym)
+        if(guild_creds is None):
             await self.bot.say(self.strings["no_key_exists"])
             return
 
         api_client = Querier()
 
         #switch command
-        if(guild_command == "log"):
+        if(guild_command == "details"):
+            guild_details_data = api_client.get_guild(guild_creds["guild_id"], guild_creds["api_key"])
+            if(not guild_details_data.has_loaded):
+                raise AssertionError(self.strings["guild_name_not_found"])
+            display_guild_details(guild_details_data)
+            return
+        elif(guild_command == "log"):
             log_lines = api_client.get_guild_log()
         else:
             await self.bot.say(self.strings["unknown_command"])
