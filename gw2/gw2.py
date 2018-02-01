@@ -65,7 +65,13 @@ class gw2:
         async def display_guild_details(guild_details):
             if(not guild_details.has_loaded):
                 return
-            em = discord.Embed(title=guild_details.object.name, color=int("0x{}".format(guild_details.object.id[:6]), 16))
+            em = discord.Embed(title=guild_details.object.name,
+                color=int("0x{}".format(guild_details.object.id[:6]), 16)
+                description=guild_details.object.motd)
+            em.add_field(name=self.strings["favour"], value=guild_details.object.favour, inline=True)
+            em.add_field(name=self.strings["influence"], value=guild_details.object.influence, inline=True)
+            em.add_field(name=self.strings["aetherium"], value=guild_details.object.aetherium, inline=True)
+            em.add_field(name=self.strings["tag"], value=guild_details.object.tag, inline=True)
             await self.bot.say(embed=em)
 
         if(not self.validate_string_input(guild_acronym)):
