@@ -62,7 +62,7 @@ class gw2:
     @commands.command()
     async def guild(self, guild_acronym, guild_command, lines=10):
 
-        def display_guild_details(guild_details):
+        async def display_guild_details(guild_details):
             if(not guild_details.has_loaded):
                 return
             em = discord.Embed(title=guild_details.object.name)
@@ -84,7 +84,7 @@ class gw2:
             guild_details_data = api_client.get_guild(guild_creds["guild_id"], guild_creds["api_key"])
             if(not guild_details_data.has_loaded):
                 raise AssertionError(self.strings["guild_name_not_found"])
-            display_guild_details(guild_details_data)
+            await display_guild_details(guild_details_data)
             return
         elif(guild_command == "log"):
             log_lines = api_client.get_guild_log()
