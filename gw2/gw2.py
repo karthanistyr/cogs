@@ -4,7 +4,7 @@ import re
 from enum import Enum
 from .utils.dataIO import dataIO
 from discord.ext import commands
-from gw2api.model.Query import Querier
+from .Query import Querier
 
 #from https://wiki.guildwars2.com/wiki/Template:Rarity
 class gw2_constants:
@@ -53,6 +53,31 @@ class gw2:
         keys = self.loadApiKeys()
         if(userId in keys):
             return keys[userId]
+
+    def get_guild_key(self, guild_acronym):
+        keys = self.loadGuildKeys()
+        if(guild_acronym in keys):
+            return keys[guild_acronym]["api_key"]
+
+    @commands.command()
+    async def guild(self, guild_acronym, guild_command, lines=10):
+        if(not self.validate_string_input(guild_acronym)):
+            await self.bot.say(self.strings["wrong_guild_alias_format"])
+            return
+
+        api_key = self.get_guild_key(guild_acronym)
+        if(api_key is None):
+            await self.bot.say(self.strings["no_key_exists"])
+            return
+
+        api_client = Querier()
+
+        #switch command
+        if(guild_command == "log"):
+            log_lines = api_client.get_guild_log()
+        else:
+            await self.bot.say(self.strings["unknown_command"])
+            return
 
     @commands.command(pass_context=True)
     async def characters(self, ctx):
@@ -109,13 +134,17 @@ class gw2:
         return match is not None
 
     @commands.command()
-    async def storeguildkey(self, guild_acronym, api_key=None):
+    async def storeguildkey(self, guild_full_name, guild_acronym, api_key=None):
         if(api_key is None):
             await self.bot.say(self.strings["no_key_passed"])
             return
 
         if(not self.validate_api_key_format(api_key)):
             await self.bot.say(self.strings["wrong_key_format"])
+            return
+
+        if(not self.validate_string_input(guild_full_name, 3, 50, "[\w ]")):
+            await self.bot.say(self.strings["wrong_guild_alias_format"])
             return
 
         if(not self.validate_string_input(guild_acronym)):
@@ -127,7 +156,15 @@ class gw2:
         if(guild_acronym in keys):
             await self.bot.say(self.strings["key_exists_warning"])
         else:
-            keys[guild_acronym] = api_key
+            api_client = Query()
+            guild_id = api_client.get_guild_id(guild_full_name)
+            if(guild_id is None):
+                await self.bot.say(self.strings["guild_name_not_found"])
+                return
+
+            staging_data = {"guild_id": guild_id, "api_key": api_key}
+            keys[guild_acronym] = staging_data
+
             self.write_guild_keys(keys)
             await self.bot.say(self.strings["command_completed"])
 

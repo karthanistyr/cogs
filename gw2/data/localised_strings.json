@@ -15,12 +15,15 @@
     "death": "Mort",
     "age": "Temps de jeu",
 		"command_completed": "Commande effectuée.",
+    "unknown_command": "Commande inconnue.",
     "missing_parameter": "Paramètre manquant: {}",
     "invalid_parameter": "Paramètre invalide: {} ({})",
 		"no_key_passed": "Vous n'avez pas passé de clé.",
     "wrong_key_format": "Format de clé invalide.",
+    "guild_name_not_found": "Nom de guilde introuvable.",
     "wrong_guild_alias_format": "Format d'alias de guilde invalide.",
-		"no_key_exists": "Il n'existe pas de clé pour votre compte. Créez-en une avec suffisamment de permissions sur https://account.arena.net/applications et stockez-la via la commande .storekey (en MP au bot).",
+    "wrong_guild_name_format": "Format de nom de guilde invalide.",
+		"no_key_exists": "Il n'existe pas de clé pour cet identifiant. Créez-en une avec suffisamment de permissions sur https://account.arena.net/applications et stockez-la via la commande .storekey (en MP au bot).",
 		"key_exists_warning": "Il y a déjà une clé enregistrée pour votre compte. Vous devez la supprimer avant d'en ajouter une nouvelle."
 	},
 	"en":
@@ -40,12 +43,15 @@
     "death": "Death",
     "age": "Time played",
 		"command_completed": "Command completed.",
+    "unknown_command": "Unknown command.",
     "missing_parameter": "Missing parameter: {}",
     "invalid_parameter": "Invalid parameter: {} ({})",
 		"no_key_passed": "You haven't passed a key.",
     "wrong_key_format": "Wrong key format.",
+    "guild_name_not_found": "Guild name not found.",
     "wrong_guild_alias_format": "Wrong guild alias format.",
+    "wrong_guild_name_format": "Wrong guild name format.",
 		"no_key_exists": "There is no key for your account.",
-		"key_exists_warning": "There is already a key registered for your account. You must delete it before adding a new one."
+		"key_exists_warning": "There is already a key registered for this identfier. You must delete it before adding a new one."
 	}
 }
