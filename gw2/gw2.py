@@ -65,7 +65,7 @@ class gw2:
         async def display_guild_details(guild_details):
             if(not guild_details.has_loaded):
                 return
-            em = discord.Embed(title=guild_details.object.name)
+            em = discord.Embed(title=guild_details.object.name, color="0x{}".format(guild_details.object.id[:6]))
             await self.bot.say(embed=em)
 
         if(not self.validate_string_input(guild_acronym)):
