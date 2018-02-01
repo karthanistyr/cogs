@@ -68,7 +68,7 @@ class gw2:
             em = discord.Embed(title=guild_details.object.name,
                 color=int("0x{}".format(guild_details.object.id[:6]), 16),
                 description=guild_details.object.motd)
-            em.add_field(name=self.strings["favour"], value=guild_details.object.favour, inline=True)
+            em.add_field(name=self.strings["favour"], value=guild_details.object.favor, inline=True)
             em.add_field(name=self.strings["influence"], value=guild_details.object.influence, inline=True)
             em.add_field(name=self.strings["aetherium"], value=guild_details.object.aetherium, inline=True)
             em.add_field(name=self.strings["tag"], value=guild_details.object.tag, inline=True)
