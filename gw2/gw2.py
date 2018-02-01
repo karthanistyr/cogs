@@ -156,7 +156,7 @@ class gw2:
         if(guild_acronym in keys):
             await self.bot.say(self.strings["key_exists_warning"])
         else:
-            api_client = Query()
+            api_client = Querier()
             guild_id = api_client.get_guild_id(guild_full_name)
             if(guild_id is None):
                 await self.bot.say(self.strings["guild_name_not_found"])
