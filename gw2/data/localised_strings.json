@@ -28,7 +28,24 @@
     "wrong_guild_alias_format": "Format d'alias de guilde invalide.",
     "wrong_guild_name_format": "Format de nom de guilde invalide.",
 		"no_key_exists": "Il n'existe pas de clé pour cet identifiant. Créez-en une avec suffisamment de permissions sur https://account.arena.net/applications et stockez-la via la commande .storekey (en MP au bot).",
-		"key_exists_warning": "Il y a déjà une clé enregistrée pour cet identifiant. Vous devez la supprimer avant d'en ajouter une nouvelle."
+		"key_exists_warning": "Il y a déjà une clé enregistrée pour cet identifiant. Vous devez la supprimer avant d'en ajouter une nouvelle.",
+    "unknown_log_entry_type": "Type d'entrée de journal inconnu: {}",
+    "no_log_to_display": "Il n'y a pas d'entrée de journal à afficher.",
+
+    "deposit": "déposé",
+    "withdraw": "retiré",
+    "queued": "mis en attente",
+    "cancelled": "annulé",
+    "completed": "complété",
+    "gold": "pièce de cuivre",
+    "log_entry_joined_mask": "{new_joiner} a rejoint la guilde.",
+    "log_entry_invited_mask": "{invited} a été invité dans la guilde par {recruiter}.",
+    "log_entry_kicked_mask": "{kicked} a été expulsé de la guilde par {kicker}.",
+    "log_entry_rankchange_mask": "{changer} a passé le grade de {changed} de {old_rank} à {new_rank}.",
+    "log_entry_treasury_mask": "{donator} a déposé {item_name} x{quantity} dans le trésor de guilde.",
+    "log_entry_stash_mask": "{member} a {action} {item_name} x{quantity} depuis/dans les coffres de la guilde.",
+    "log_entry_motd_mask": "{officer} a changé le mot du jour en '{motd}'.",
+    "log_entry_upgrade_mask": "{member} a {action} l'amélioration de guilde {upgrade_name}."
 	},
 	"en":
 	{
@@ -60,6 +77,23 @@
     "wrong_guild_alias_format": "Wrong guild alias format.",
     "wrong_guild_name_format": "Wrong guild name format.",
 		"no_key_exists": "There is no key for your account.",
-		"key_exists_warning": "There is already a key registered for this identifier. You must delete it before adding a new one."
+		"key_exists_warning": "There is already a key registered for this identifier. You must delete it before adding a new one.",
+    "unknown_log_entry_type": "unknown log entry type: {}",
+    "no_log_to_display": "There are no log entries to display.",
+
+    "deposit": "deposited",
+    "withdraw": "withdrawn",
+    "queued": "queued",
+    "cancelled": "cancelled",
+    "completed": "completed",
+    "gold": "copper coin",
+    "log_entry_joined_mask": "{new_joiner} has joined the guild.",
+    "log_entry_invited_mask": "{invited} has been invited into the guild by {recruiter}.",
+    "log_entry_kicked_mask": "{kicked} was kicked from the guild by {kicker}.",
+    "log_entry_rankchange_mask": "{changer} has changed {changed}'s rank from {old_rank} to {new_rank}.",
+    "log_entry_treasury_mask": "{donator} has donated {item_name} x{quantity} into the guild's treasury.",
+    "log_entry_stash_mask": "{member} has {action} {item_name} x{quantity} {from_into} the guild's coffers.",
+    "log_entry_motd_mask": "{officer} has changed the message of the day into '{motd}'.",
+    "log_entry_upgrade_mask": "{member} has {action} the guild upgrade {upgrade_name}."
 	}
 }
