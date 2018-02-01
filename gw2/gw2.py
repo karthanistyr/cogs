@@ -4,7 +4,7 @@ import re
 from enum import Enum
 from .utils.dataIO import dataIO
 from discord.ext import commands
-from .Query import Querier
+from gw2api.Query import Querier
 
 #from https://wiki.guildwars2.com/wiki/Template:Rarity
 class gw2_constants:
