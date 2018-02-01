@@ -66,7 +66,7 @@ class gw2:
             if(not guild_details.has_loaded):
                 return
             em = discord.Embed(title=guild_details.object.name,
-                color=int("0x{}".format(guild_details.object.id[:6]), 16)
+                color=int("0x{}".format(guild_details.object.id[:6]), 16),
                 description=guild_details.object.motd)
             em.add_field(name=self.strings["favour"], value=guild_details.object.favour, inline=True)
             em.add_field(name=self.strings["influence"], value=guild_details.object.influence, inline=True)
