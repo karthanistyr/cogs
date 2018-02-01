@@ -31,6 +31,7 @@
 		"key_exists_warning": "Il y a déjà une clé enregistrée pour cet identifiant. Vous devez la supprimer avant d'en ajouter une nouvelle.",
     "unknown_log_entry_type": "Type d'entrée de journal inconnu: {}",
     "no_log_to_display": "Il n'y a pas d'entrée de journal à afficher.",
+    "max_log_lines_exceeded": "Vous avez dépassé le maximum d'entrée de journal de (max {})",
 
     "deposit": "déposé",
     "withdraw": "retiré",
@@ -80,6 +81,7 @@
 		"key_exists_warning": "There is already a key registered for this identifier. You must delete it before adding a new one.",
     "unknown_log_entry_type": "unknown log entry type: {}",
     "no_log_to_display": "There are no log entries to display.",
+    "max_log_lines_exceeded": "You have exceeded the maximum log lines of {}",
 
     "deposit": "deposited",
     "withdraw": "withdrawn",

@@ -117,6 +117,10 @@ class gw2:
             await display_guild_details(guild_details_data)
             return
         elif(guild_command == "log"):
+            if(nb_lines > 30):
+                await self.bot.say(self.strings["max_log_lines_exceeded"].format(30))
+                return
+
             log_lines = api_client.get_guild_log(guild_creds["guild_id"], guild_creds["api_key"])
             if(log_lines is not None and len(log_lines) > 0):
                 await display_log_lines(log_lines)
