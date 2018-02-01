@@ -24,7 +24,7 @@
     "wrong_guild_alias_format": "Format d'alias de guilde invalide.",
     "wrong_guild_name_format": "Format de nom de guilde invalide.",
 		"no_key_exists": "Il n'existe pas de clé pour cet identifiant. Créez-en une avec suffisamment de permissions sur https://account.arena.net/applications et stockez-la via la commande .storekey (en MP au bot).",
-		"key_exists_warning": "Il y a déjà une clé enregistrée pour votre compte. Vous devez la supprimer avant d'en ajouter une nouvelle."
+		"key_exists_warning": "Il y a déjà une clé enregistrée pour cet identifiant. Vous devez la supprimer avant d'en ajouter une nouvelle."
 	},
 	"en":
 	{
