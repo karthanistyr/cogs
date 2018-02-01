@@ -80,7 +80,7 @@ class gw2:
             return str(log_entry)
 
     @commands.command()
-    async def guild(self, guild_acronym, guild_command, lines=10):
+    async def guild(self, guild_acronym, guild_command, nb_lines=10):
 
         async def display_guild_details(guild_details):
             if(not guild_details.has_loaded):
@@ -117,7 +117,7 @@ class gw2:
             await display_guild_details(guild_details_data)
             return
         elif(guild_command == "log"):
-            if(nb_lines > 30):
+            if(nb_lines is None or nb_lines > 30):
                 await self.bot.say(self.strings["max_log_lines_exceeded"].format(30))
                 return
 
