@@ -81,7 +81,7 @@ class gw2:
 
         #switch command
         if(guild_command == "details"):
-            guild_details_data = api_client.get_guild(id=guild_creds["guild_id"], lang=self.locale, api_key=guild_creds["api_key"])
+            guild_details_data = api_client.get_guild(guild_creds["guild_id"], self.locale, guild_creds["api_key"])
             if(not guild_details_data.has_loaded):
                 raise AssertionError(self.strings["guild_name_not_found"])
             await display_guild_details(guild_details_data)
