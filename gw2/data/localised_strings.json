@@ -31,7 +31,7 @@
 		"key_exists_warning": "Il y a déjà une clé enregistrée pour cet identifiant. Vous devez la supprimer avant d'en ajouter une nouvelle.",
     "unknown_log_entry_type": "Type d'entrée de journal inconnu: {}",
     "no_log_to_display": "Il n'y a pas d'entrée de journal à afficher.",
-    "max_log_lines_exceeded": "Vous avez dépassé le maximum d'entrée de journal de (max {})",
+    "max_log_lines_exceeded": "Vous avez requis en excès du maximum d'entrée de journal en une seule requête (max {})",
 
     "deposit": "déposé",
     "withdraw": "retiré",
