@@ -61,21 +61,23 @@ class gw2:
 
     def translate_log_entry(self, log_entry):
         if(log_entry.type == "joined"):
-            return self.strings["log_entry_joined_mask"].format(new_joiner=log_entry.user)
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_joined_mask"].format(new_joiner=log_entry.user))
         if(log_entry.type == "invited"):
-            return self.strings["log_entry_invited_mask"].format(invited=log_entry.user, recruiter=log_entry.invited_by)
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_invited_mask"].format(invited=log_entry.user, recruiter=log_entry.invited_by))
         if(log_entry.type == "kicked"):
-            return self.strings["log_entry_kicked_mask"].format(kicked=log_entry.user, kicker=log_entry.kicked_by)
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_kicked_mask"].format(kicked=log_entry.user, kicker=log_entry.kicked_by))
         if(log_entry.type == "rank_change"):
-            return self.strings["log_entry_rankchange_mask"].format(changed=log_entry.user, changer=log_entry.changed_by, old_rank=log_entry.old_rank, new_rank=log_entry.new_rank)
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_rankchange_mask"].format(changed=log_entry.user, changer=log_entry.changed_by, old_rank=log_entry.old_rank, new_rank=log_entry.new_rank))
         if(log_entry.type == "treasury"):
-            return self.strings["log_entry_treasury_mask"].format(donator=log_entry.user, item_name=log_entry.item.object.name, quantity=log_entry.count)
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_treasury_mask"].format(donator=log_entry.user, item_name=log_entry.item.object.name, quantity=log_entry.count))
         if(log_entry.type == "stash"):
-            return self.strings["log_entry_stash_mask"].format(member=log_entry.user, action=self.strings[log_entry.operation], item_name=self.strings["gold"] if log_entry.item is None else log_entry.item.object.name, quantity=log_entry.count)
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_stash_mask"].format(member=log_entry.user, action=self.strings[log_entry.operation], item_name=self.strings["gold"] if log_entry.item is None else log_entry.item.object.name, quantity=log_entry.count))
         if(log_entry.type == "motd"):
-            return self.strings["log_entry_motd_mask"].format(officer=log_entry.user, motd=log_entry.motd)
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_motd_mask"].format(officer=log_entry.user, motd=log_entry.motd))
         if(log_entry.type == "upgrade"):
-            return self.strings["log_entry_upgrade_mask"].format(member=log_entry.user, action=log_entry.action, upgrade_name=log_entry.upgrade.object.name)
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_upgrade_mask"].format(member=log_entry.user, action=log_entry.action, upgrade_name=log_entry.upgrade.object.name))
+        else:
+            return str(log_entry)
 
     @commands.command()
     async def guild(self, guild_acronym, guild_command, lines=10):
