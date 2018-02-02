@@ -79,6 +79,14 @@ class gw2:
         else:
             return str(log_entry)
 
+    async def bot_say_large_text(self, large_text):
+        message_char_limit = 2000
+        remaining_string = large_text
+        while(len(remaining_string) > 0):
+            buffer = remaining_string[:message_char_limit]
+            remaining_string = remaining_string[message_char_limit:]
+            await self.bot.say(buffer)
+
     @commands.command()
     async def guild(self, guild_acronym, guild_command, nb_lines=10):
 
@@ -96,7 +104,7 @@ class gw2:
 
         async def display_log_lines(log_lines):
             all_lines = "\n".join([self.translate_log_entry(log_line) for log_line in log_lines])
-            await self.bot.say(all_lines)
+            await self.bot_say_large_text(all_lines)
 
         if(not self.validate_string_input(guild_acronym)):
             await self.bot.say(self.strings["wrong_guild_alias_format"])
