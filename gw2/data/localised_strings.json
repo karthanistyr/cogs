@@ -39,6 +39,7 @@
     "cancelled": "annulé",
     "completed": "complété",
     "gold": "pièce de cuivre",
+    "gifted": "a/ont offert",
     "log_entry_joined_mask": "{new_joiner} a rejoint la guilde.",
     "log_entry_invited_mask": "{invited} a été invité dans la guilde par {recruiter}.",
     "log_entry_kicked_mask": "{kicked} a été expulsé de la guilde par {kicker}.",
@@ -46,7 +47,8 @@
     "log_entry_treasury_mask": "{donator} a déposé {item_name} x{quantity} dans le trésor de guilde.",
     "log_entry_stash_mask": "{member} a {action} {item_name} x{quantity} depuis/dans les coffres de la guilde.",
     "log_entry_motd_mask": "{officer} a changé le mot du jour en '{motd}'.",
-    "log_entry_upgrade_mask": "{member} a {action} l'amélioration de guilde {upgrade_name}."
+    "log_entry_upgrade_mask": "{member} a {action} l'amélioration de guilde {upgrade_name}.",
+    "log_entry_influence_mask": "{nb_participants} participants {activity} de l'influence à la guilde ({participants})."
 	},
 	"en":
 	{
@@ -89,6 +91,7 @@
     "cancelled": "cancelled",
     "completed": "completed",
     "gold": "copper coin",
+    "gifted": "gifted",
     "log_entry_joined_mask": "{new_joiner} has joined the guild.",
     "log_entry_invited_mask": "{invited} has been invited into the guild by {recruiter}.",
     "log_entry_kicked_mask": "{kicked} was kicked from the guild by {kicker}.",
@@ -96,6 +99,7 @@
     "log_entry_treasury_mask": "{donator} has donated {item_name} x{quantity} into the guild's treasury.",
     "log_entry_stash_mask": "{member} has {action} {item_name} x{quantity} {from_into} the guild's coffers.",
     "log_entry_motd_mask": "{officer} has changed the message of the day into '{motd}'.",
-    "log_entry_upgrade_mask": "{member} has {action} the guild upgrade {upgrade_name}."
+    "log_entry_upgrade_mask": "{member} has {action} the guild upgrade {upgrade_name}.",
+    "log_entry_influence_mask": "{nb_participants} participants {activity} influence to the guild ({participants})."
 	}
 }

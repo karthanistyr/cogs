@@ -76,8 +76,9 @@ class gw2:
             return "[{}] {}".format(log_entry.time, self.strings["log_entry_motd_mask"].format(officer=log_entry.user, motd=log_entry.motd))
         if(log_entry.type == "upgrade"):
             return "[{}] {}".format(log_entry.time, self.strings["log_entry_upgrade_mask"].format(member=log_entry.user, action=log_entry.action, upgrade_name=log_entry.upgrade.object.name))
-        else:
-            return str(log_entry)
+        if(log_entry.type == "influence"):
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_influence_mask"].format(nb_participants=log_entry.total_participants, activity=self.strings[log_entry.activity], participants=", ".join(log_entry.participants)))
+        return str(log_entry)
 
     async def bot_say_large_text(self, large_text):
         message_char_limit = 2000
