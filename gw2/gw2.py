@@ -129,10 +129,11 @@ class gw2:
                 await self.bot.say(self.strings["max_log_lines_exceeded"].format(30))
                 return
 
-            log_lines = api_client.get_guild_log(guild_creds["guild_id"], guild_creds["api_key"])
+            log_lines = api_client.get_guild_log(guild_creds["guild_id"], guild_creds["api_key"], nb_lines)
             if(log_lines is not None and len(log_lines) > 0):
                 await display_log_lines(log_lines)
                 return
+
             await self.bot.say(self.strings["no_log_to_display"])
         else:
             await self.bot.say(self.strings["unknown_command"])
