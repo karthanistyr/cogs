@@ -95,8 +95,8 @@ class gw2:
             await self.bot.say(embed=em)
 
         async def display_log_lines(log_lines):
-            for line in log_lines:
-                await self.bot.say(self.translate_log_entry(line))
+            all_lines = "\n".join([self.translate(log_line) for log_line in log_lines])
+            await self.bot.say(all_lines)
 
         if(not self.validate_string_input(guild_acronym)):
             await self.bot.say(self.strings["wrong_guild_alias_format"])
