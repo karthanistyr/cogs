@@ -71,7 +71,7 @@ class gw2:
         if(log_entry.type == "treasury"):
             return "[{}] {}".format(log_entry.time, self.strings["log_entry_treasury_mask"].format(donator=log_entry.user, item_name=log_entry.item.object.name, quantity=log_entry.count))
         if(log_entry.type == "stash"):
-            return "[{}] {}".format(log_entry.time, self.strings["log_entry_stash_mask"].format(member=log_entry.user, action=self.strings[log_entry.operation], item_name=self.strings["gold"] if log_entry.item is None else log_entry.item.object.name, quantity=log_entry.count))
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_stash_mask"].format(member=log_entry.user, action=self.strings[log_entry.operation], item_name=self.strings["gold"] if log_entry.item is None else log_entry.item.object, quantity=log_entry.count))
         if(log_entry.type == "motd"):
             return "[{}] {}".format(log_entry.time, self.strings["log_entry_motd_mask"].format(officer=log_entry.user, motd=log_entry.motd))
         if(log_entry.type == "upgrade"):
