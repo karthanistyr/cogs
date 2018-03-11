@@ -69,15 +69,15 @@ class gw2:
         if(log_entry.type == "rank_change"):
             return "[{}] {}".format(log_entry.time, self.strings["log_entry_rankchange_mask"].format(changed=log_entry.user, changer=log_entry.changed_by, old_rank=log_entry.old_rank, new_rank=log_entry.new_rank))
         if(log_entry.type == "treasury"):
-            return "[{}] {}".format(log_entry.time, self.strings["log_entry_treasury_mask"].format(donator=log_entry.user, item_name=log_entry.item.id, quantity=log_entry.count))
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_treasury_mask"].format(donator=log_entry.user, item_name=log_entry.item.object, quantity=log_entry.count))
         if(log_entry.type == "stash"):
-            name = self.strings["gold"] if log_entry.item is None else log_entry.item.id
+            name = self.strings["gold"] if log_entry.item is None else log_entry.item.object
             qty = log_entry.coins if log_entry.item is None else log_entry.count
             return "[{}] {}".format(log_entry.time, self.strings["log_entry_stash_mask"].format(member=log_entry.user, action=self.strings[log_entry.operation], item_name=name, quantity=qty))
         if(log_entry.type == "motd"):
             return "[{}] {}".format(log_entry.time, self.strings["log_entry_motd_mask"].format(officer=log_entry.user, motd=log_entry.motd))
         if(log_entry.type == "upgrade"):
-            return "[{}] {}".format(log_entry.time, self.strings["log_entry_upgrade_mask"].format(member=log_entry.user, action=log_entry.action, upgrade_name=log_entry.upgrade.id))
+            return "[{}] {}".format(log_entry.time, self.strings["log_entry_upgrade_mask"].format(member=log_entry.user, action=log_entry.action, upgrade_name=log_entry.upgrade.object))
         if(log_entry.type == "influence"):
             return "[{}] {}".format(log_entry.time, self.strings["log_entry_influence_mask"].format(nb_participants=log_entry.total_participants, activity=self.strings[log_entry.activity], participants=", ".join(log_entry.participants)))
         return str(log_entry)
